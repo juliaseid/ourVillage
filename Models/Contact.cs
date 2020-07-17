@@ -5,6 +5,7 @@ namespace ourVillage.Models
     public int ContactId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string BusinessOrg { get; set; }
     public string Phone { get; set; }
     public string ContactType { get; set; }
     public string Relationship { get; set; }
