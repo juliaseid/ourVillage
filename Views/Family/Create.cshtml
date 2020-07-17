@@ -1,0 +1,40 @@
+@{
+  Layout = "_Layout";
+}
+
+@model ourVillage.Models.Family
+
+<h3>Create Your Family Profile</h3>
+@using (Html.BeginForm())
+{
+    <h5>Give your family a name - maybe your last name, maybe something fun!</h5>@Html.LabelFor(model => model.ProfileName)
+    @Html.TextBoxFor(model => model.ProfileName)
+    <br>
+    <div class = "well">
+      <h5>Parent 1 Details:</h5>
+      <p>First Name: </p>
+      @Html.TextBoxFor(model => model.Parent1FirstName)
+      <p>Last Name: </p>
+      @Html.TextBoxFor(model => model.Parent1LastName)
+      <p>Relationship: </p>
+      @Html.TextBoxFor(model => model.Parent1Relationship)
+      <p>Phone: </p>
+      @Html.TextBoxFor(model => model.Parent1Phone)
+    </div>
+    <div class = "well">
+      <h5>Parent 2 Details:</h5>
+      <p>First Name: </p>
+      @Html.TextBoxFor(model => model.Parent2FirstName)
+      <p>Last Name: </p>
+      @Html.TextBoxFor(model => model.Parent2LastName)
+      <p>Relationship: </p>
+      @Html.TextBoxFor(model => model.Parent2Relationship)
+      <p>Phone: </p>
+      @Html.TextBoxFor(model => model.Parent2Phone)
+    </div>
+    <input type="submit" value="Join ourVillage!" class="btn-btnprimary"/>
+}
+
+
+
+

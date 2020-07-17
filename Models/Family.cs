@@ -5,7 +5,7 @@ namespace ourVillage.Models
   public class Family
   {
     public int FamilyId { get; set; }
-    //require Parent1 info, allow up to 4 parents thru overloaded constructor
+    public string ProfileName { get; set; }
     public string Parent1FirstName { get; set; }
     public string Parent1LastName { get; set; }
     public string Parent1Phone { get; set; }
