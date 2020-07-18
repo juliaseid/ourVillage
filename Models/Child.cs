@@ -5,6 +5,10 @@ namespace ourVillage.Models
 {
   public class Child
   {
+    public Child()
+    {
+      this.Notes = new List<ChildNote>();
+    }
     public int ChildId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -13,6 +17,7 @@ namespace ourVillage.Models
     public string AgeUnit { get; set; }
     public DateTime Birthday { get; set; }
     public ICollection<Schedule> DailySchedules { get; set; }
+    public virtual ICollection<ChildNote> Notes { get; set; }
     public int FamilyId { get; set; }
     public virtual Family Family { get; set; }
   }
