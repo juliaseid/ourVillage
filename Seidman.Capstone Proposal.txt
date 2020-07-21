@@ -1,0 +1,34 @@
+﻿Name of Student: Julia Seidman
+Name of Project: ourVillage.com
+
+Project's Purpose or Goal: A centralized platform for families to manage communication between multiple caregivers.  For co-parents, grandparents, nannies, babysitters, and even neighbors in a pinch, this site will ensure that all caregivers have access to essential information for the children they care for, reducing stress for parents and enabling a smoother transition between caregivers.
+
+List the absolute minimum features the project requires to meet this purpose or goal:
+* Parents can create Child profiles.
+* Caregivers can create accounts.
+* Parents can grant caregivers access to child profiles.
+* Parents can update Child profiles.
+* Parents can update which caregivers are linked to their children.
+* Caregivers can post messages to Child profiles.
+* Caregivers can view children from multiple families on their dashboards.
+
+What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
+* C#/.Net
+* Entity/Identity Authentication
+* Possibly ReactJS.NET
+
+If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific.
+* Parents will be able to add 2 levels of caregiver, one with read-only access, and one with read-write access to certain child properties.
+* Homework section will be expanded to allow assignment tracking.
+* Food section will be expanded to track nutritional composition of child’s diet.
+* Scheduling capability for parents and caregivers to allow tracking who is caring for children at specific times.
+* Behavior modification section will be updated to allow recording responses to intervention.
+
+What additional tools, frameworks, libraries, APIs, or other resources will these additional features require?
+* None, I don’t think.  Maybe a calendar library if I opt to pursue the scheduling piece.
+* Is there anything else you'd like your instructor to know?
+
+I’d love some guidance on the feasibility of 
+1. ReactJS.NET
+2. Hosting a C#/.NET application
+3. Alternative authentication approaches or a place to see a more full-fledged implementation of Identity beyond what we did in C#.
