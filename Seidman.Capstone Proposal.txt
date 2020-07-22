@@ -1,5 +1,5 @@
 ﻿Name of Student: Julia Seidman
-Name of Project: ourVillage.com
+Name of Project: YourVillage.com
 
 Project's Purpose or Goal: A centralized platform for families to manage communication between multiple caregivers.  For co-parents, grandparents, nannies, babysitters, and even neighbors in a pinch, this site will ensure that all caregivers have access to essential information for the children they care for, reducing stress for parents and enabling a smoother transition between caregivers.
 

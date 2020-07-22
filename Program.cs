@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace ourVillage
+namespace YourVillage
 {
   public class Program
   {

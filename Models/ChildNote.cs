@@ -1,4 +1,4 @@
-namespace ourVillage.Models
+namespace YourVillage.Models
 {
   public class ChildNote
   {

@@ -1,4 +1,4 @@
-<img src="">
+![YourVillage Logo](wwwroot/img/logo.png)
 <br />
 
 #### By Julia Seidman
@@ -11,7 +11,7 @@ Parent users have the ability to share details about their family and children, 
 <hr />
 
 ## Component Diagrams
-![component structure](./ourVillage.drawio.svg)
+![component structure](./YourVillage.drawio.svg)
 
 <hr/>
 
@@ -53,7 +53,7 @@ Parent users have the ability to share details about their family and children, 
 3. Navigate to the project directory from your terminal by entering the following:
 
 ```
-$ cd ~/ourVillage
+$ cd ~/YourVillage
 ```
 4. Within the projects directory install all required dependencies with
 ```
@@ -93,7 +93,7 @@ If you have a bug or an idea, browse the open issues before opening a new one. Y
 
 #### Apache License V2.0
 
-Copyright 2020 Tyler Bates, Julia Seidman, KhanSahab Khakwan @ Epicodus
+Copyright 2020 Julia Seidman @ Epicodus
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -106,3 +106,13 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+
+
+Colors:
+
+Green: 009B72
+Black: 2A2D34
+Ivory: F6F7EB
+Blue: 7785AC
+Orange: EF8354

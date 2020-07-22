@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
-using ourVillage.Models;
+using YourVillage.Models;
 
-namespace ourVillage
+namespace YourVillage
 {
   public class Startup
   {
@@ -26,11 +26,11 @@ namespace ourVillage
       services.AddMvc();
 
       services.AddEntityFrameworkMySql()
-        .AddDbContext<ourVillageContext>(options => options
+        .AddDbContext<YourVillageContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
-        .AddEntityFrameworkStores<ourVillageContext>()
+        .AddEntityFrameworkStores<YourVillageContext>()
         .AddDefaultTokenProviders();
 
       services.Configure<IdentityOptions>(options =>

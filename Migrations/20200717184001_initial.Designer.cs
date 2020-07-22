@@ -4,370 +4,370 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ourVillage.Models;
+using YourVillage.Models;
 
-namespace ourVillage.Migrations
+namespace YourVillage.Migrations
 {
-    [DbContext(typeof(ourVillageContext))]
-    [Migration("20200717184001_initial")]
-    partial class initial
+  [DbContext(typeof(YourVillageContext))]
+  [Migration("20200717184001_initial")]
+  partial class initial
+  {
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+          {
+            b.Property<string>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+            b.Property<string>("ConcurrencyStamp")
+                      .IsConcurrencyToken();
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
+            b.Property<string>("Name")
+                      .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
+            b.Property<string>("NormalizedName")
+                      .HasMaxLength(256);
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex");
+            b.HasIndex("NormalizedName")
+                      .IsUnique()
+                      .HasName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles");
-                });
+            b.ToTable("AspNetRoles");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClaimType");
+            b.Property<string>("ClaimType");
 
-                    b.Property<string>("ClaimValue");
+            b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+            b.Property<string>("RoleId")
+                      .IsRequired();
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+            b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
-                });
+            b.ToTable("AspNetRoleClaims");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ClaimType");
+            b.Property<string>("ClaimType");
 
-                    b.Property<string>("ClaimValue");
+            b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+            b.Property<string>("UserId")
+                      .IsRequired();
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
-                });
+            b.ToTable("AspNetUserClaims");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+          {
+            b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey");
+            b.Property<string>("ProviderKey");
 
-                    b.Property<string>("ProviderDisplayName");
+            b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+            b.Property<string>("UserId")
+                      .IsRequired();
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+            b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
-                });
+            b.ToTable("AspNetUserLogins");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+          {
+            b.Property<string>("UserId");
 
-                    b.Property<string>("RoleId");
+            b.Property<string>("RoleId");
 
-                    b.HasKey("UserId", "RoleId");
+            b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
+            b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
-                });
+            b.ToTable("AspNetUserRoles");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+          {
+            b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+            b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name");
+            b.Property<string>("Name");
 
-                    b.Property<string>("Value");
+            b.Property<string>("Value");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+            b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
-                });
+            b.ToTable("AspNetUserTokens");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Address", b =>
-                {
-                    b.Property<int>("AddressId")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("YourVillage.Models.Address", b =>
+          {
+            b.Property<int>("AddressId")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AddressName");
+            b.Property<string>("AddressName");
 
-                    b.Property<string>("City");
+            b.Property<string>("City");
 
-                    b.Property<int?>("FamilyId");
+            b.Property<int?>("FamilyId");
 
-                    b.Property<string>("State");
+            b.Property<string>("State");
 
-                    b.Property<string>("StreetAddress");
+            b.Property<string>("StreetAddress");
 
-                    b.Property<string>("StreetAddressLine2");
+            b.Property<string>("StreetAddressLine2");
 
-                    b.Property<int>("Zip");
+            b.Property<int>("Zip");
 
-                    b.HasKey("AddressId");
+            b.HasKey("AddressId");
 
-                    b.HasIndex("FamilyId");
+            b.HasIndex("FamilyId");
 
-                    b.ToTable("Addresses");
-                });
+            b.ToTable("Addresses");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("YourVillage.Models.ApplicationUser", b =>
+          {
+            b.Property<string>("Id")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AccessFailedCount");
+            b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+            b.Property<string>("ConcurrencyStamp")
+                      .IsConcurrencyToken();
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
+            b.Property<string>("Email")
+                      .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+            b.Property<bool>("EmailConfirmed");
 
-                    b.Property<bool>("LockoutEnabled");
+            b.Property<bool>("LockoutEnabled");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+            b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
+            b.Property<string>("NormalizedEmail")
+                      .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
+            b.Property<string>("NormalizedUserName")
+                      .HasMaxLength(256);
 
-                    b.Property<string>("PasswordHash");
+            b.Property<string>("PasswordHash");
 
-                    b.Property<string>("PhoneNumber");
+            b.Property<string>("PhoneNumber");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+            b.Property<bool>("PhoneNumberConfirmed");
 
-                    b.Property<string>("SecurityStamp");
+            b.Property<string>("SecurityStamp");
 
-                    b.Property<bool>("TwoFactorEnabled");
+            b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
+            b.Property<string>("UserName")
+                      .HasMaxLength(256);
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+            b.HasIndex("NormalizedEmail")
+                      .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
+            b.HasIndex("NormalizedUserName")
+                      .IsUnique()
+                      .HasName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers");
-                });
+            b.ToTable("AspNetUsers");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Child", b =>
-                {
-                    b.Property<int>("ChildId")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("YourVillage.Models.Child", b =>
+          {
+            b.Property<int>("ChildId")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Age");
+            b.Property<int>("Age");
 
-                    b.Property<string>("AgeUnit");
+            b.Property<string>("AgeUnit");
 
-                    b.Property<DateTime>("Birthday");
+            b.Property<DateTime>("Birthday");
 
-                    b.Property<int>("FamilyId");
+            b.Property<int>("FamilyId");
 
-                    b.Property<string>("FirstName");
+            b.Property<string>("FirstName");
 
-                    b.Property<string>("LastName");
+            b.Property<string>("LastName");
 
-                    b.Property<string>("Nickname");
+            b.Property<string>("Nickname");
 
-                    b.HasKey("ChildId");
+            b.HasKey("ChildId");
 
-                    b.HasIndex("FamilyId");
+            b.HasIndex("FamilyId");
 
-                    b.ToTable("Children");
-                });
+            b.ToTable("Children");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Contact", b =>
-                {
-                    b.Property<int>("ContactId")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("YourVillage.Models.Contact", b =>
+          {
+            b.Property<int>("ContactId")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BusinessOrg");
+            b.Property<string>("BusinessOrg");
 
-                    b.Property<string>("ContactType");
+            b.Property<string>("ContactType");
 
-                    b.Property<int?>("FamilyId");
+            b.Property<int?>("FamilyId");
 
-                    b.Property<string>("FirstName");
+            b.Property<string>("FirstName");
 
-                    b.Property<string>("LastName");
+            b.Property<string>("LastName");
 
-                    b.Property<string>("Phone");
+            b.Property<string>("Phone");
 
-                    b.Property<string>("Relationship");
+            b.Property<string>("Relationship");
 
-                    b.HasKey("ContactId");
+            b.HasKey("ContactId");
 
-                    b.HasIndex("FamilyId");
+            b.HasIndex("FamilyId");
 
-                    b.ToTable("Contacts");
-                });
+            b.ToTable("Contacts");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Family", b =>
-                {
-                    b.Property<int>("FamilyId")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("YourVillage.Models.Family", b =>
+          {
+            b.Property<int>("FamilyId")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Parent1AddressLine1");
+            b.Property<string>("Parent1AddressLine1");
 
-                    b.Property<string>("Parent1AddressLine2");
+            b.Property<string>("Parent1AddressLine2");
 
-                    b.Property<string>("Parent1FirstName");
+            b.Property<string>("Parent1FirstName");
 
-                    b.Property<string>("Parent1LastName");
+            b.Property<string>("Parent1LastName");
 
-                    b.Property<string>("Parent1Phone");
+            b.Property<string>("Parent1Phone");
 
-                    b.Property<string>("Parent1Relationship");
+            b.Property<string>("Parent1Relationship");
 
-                    b.Property<int>("Parent1ZipCode");
+            b.Property<int>("Parent1ZipCode");
 
-                    b.HasKey("FamilyId");
+            b.HasKey("FamilyId");
 
-                    b.ToTable("Families");
-                });
+            b.ToTable("Families");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Schedule", b =>
-                {
-                    b.Property<int>("ScheduleId")
-                        .ValueGeneratedOnAdd();
+      modelBuilder.Entity("YourVillage.Models.Schedule", b =>
+          {
+            b.Property<int>("ScheduleId")
+                      .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ChildId");
+            b.Property<int?>("ChildId");
 
-                    b.Property<string>("Day");
+            b.Property<string>("Day");
 
-                    b.HasKey("ScheduleId");
+            b.HasKey("ScheduleId");
 
-                    b.HasIndex("ChildId");
+            b.HasIndex("ChildId");
 
-                    b.ToTable("Schedules");
-                });
+            b.ToTable("Schedules");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+          {
+            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                      .WithMany()
+                      .HasForeignKey("RoleId")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("ourVillage.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+          {
+            b.HasOne("YourVillage.Models.ApplicationUser")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("ourVillage.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+          {
+            b.HasOne("YourVillage.Models.ApplicationUser")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+          {
+            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                      .WithMany()
+                      .HasForeignKey("RoleId")
+                      .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ourVillage.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+            b.HasOne("YourVillage.Models.ApplicationUser")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("ourVillage.Models.ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+          {
+            b.HasOne("YourVillage.Models.ApplicationUser")
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Address", b =>
-                {
-                    b.HasOne("ourVillage.Models.Family")
-                        .WithMany("Addresses")
-                        .HasForeignKey("FamilyId");
-                });
+      modelBuilder.Entity("YourVillage.Models.Address", b =>
+          {
+            b.HasOne("YourVillage.Models.Family")
+                      .WithMany("Addresses")
+                      .HasForeignKey("FamilyId");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Child", b =>
-                {
-                    b.HasOne("ourVillage.Models.Family", "Family")
-                        .WithMany("Children")
-                        .HasForeignKey("FamilyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
+      modelBuilder.Entity("YourVillage.Models.Child", b =>
+          {
+            b.HasOne("YourVillage.Models.Family", "Family")
+                      .WithMany("Children")
+                      .HasForeignKey("FamilyId")
+                      .OnDelete(DeleteBehavior.Cascade);
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Contact", b =>
-                {
-                    b.HasOne("ourVillage.Models.Family")
-                        .WithMany("Contacts")
-                        .HasForeignKey("FamilyId");
-                });
+      modelBuilder.Entity("YourVillage.Models.Contact", b =>
+          {
+            b.HasOne("YourVillage.Models.Family")
+                      .WithMany("Contacts")
+                      .HasForeignKey("FamilyId");
+          });
 
-            modelBuilder.Entity("ourVillage.Models.Schedule", b =>
-                {
-                    b.HasOne("ourVillage.Models.Child")
-                        .WithMany("DailySchedules")
-                        .HasForeignKey("ChildId");
-                });
+      modelBuilder.Entity("YourVillage.Models.Schedule", b =>
+          {
+            b.HasOne("YourVillage.Models.Child")
+                      .WithMany("DailySchedules")
+                      .HasForeignKey("ChildId");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

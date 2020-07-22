@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ourVillage.Models
+namespace YourVillage.Models
 {
   public class Note
   {

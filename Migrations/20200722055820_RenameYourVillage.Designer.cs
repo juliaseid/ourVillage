@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ourVillage.Models;
+using YourVillage.Models;
 
-namespace ourVillage.Migrations
+namespace YourVillage.Migrations
 {
-    [DbContext(typeof(ourVillageContext))]
-    partial class ourVillageContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(YourVillageContext))]
+    [Migration("20200722055820_RenameYourVillage")]
+    partial class RenameYourVillage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,7 +126,7 @@ namespace ourVillage.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Address", b =>
+            modelBuilder.Entity("YourVillage.Models.Address", b =>
                 {
                     b.Property<int>("AddressId")
                         .ValueGeneratedOnAdd();
@@ -150,7 +152,7 @@ namespace ourVillage.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.ApplicationUser", b =>
+            modelBuilder.Entity("YourVillage.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -200,7 +202,7 @@ namespace ourVillage.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Child", b =>
+            modelBuilder.Entity("YourVillage.Models.Child", b =>
                 {
                     b.Property<int>("ChildId")
                         .ValueGeneratedOnAdd();
@@ -226,7 +228,7 @@ namespace ourVillage.Migrations
                     b.ToTable("Children");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.ChildNote", b =>
+            modelBuilder.Entity("YourVillage.Models.ChildNote", b =>
                 {
                     b.Property<int>("ChildNoteId")
                         .ValueGeneratedOnAdd();
@@ -244,7 +246,7 @@ namespace ourVillage.Migrations
                     b.ToTable("ChildNote");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Contact", b =>
+            modelBuilder.Entity("YourVillage.Models.Contact", b =>
                 {
                     b.Property<int>("ContactId")
                         .ValueGeneratedOnAdd();
@@ -270,7 +272,7 @@ namespace ourVillage.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Family", b =>
+            modelBuilder.Entity("YourVillage.Models.Family", b =>
                 {
                     b.Property<int>("FamilyId")
                         .ValueGeneratedOnAdd();
@@ -298,7 +300,7 @@ namespace ourVillage.Migrations
                     b.ToTable("Families");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Note", b =>
+            modelBuilder.Entity("YourVillage.Models.Note", b =>
                 {
                     b.Property<int>("NoteId")
                         .ValueGeneratedOnAdd();
@@ -314,7 +316,7 @@ namespace ourVillage.Migrations
                     b.ToTable("Note");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Schedule", b =>
+            modelBuilder.Entity("YourVillage.Models.Schedule", b =>
                 {
                     b.Property<int>("ScheduleId")
                         .ValueGeneratedOnAdd();
@@ -340,7 +342,7 @@ namespace ourVillage.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ourVillage.Models.ApplicationUser")
+                    b.HasOne("YourVillage.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -348,7 +350,7 @@ namespace ourVillage.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ourVillage.Models.ApplicationUser")
+                    b.HasOne("YourVillage.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -361,7 +363,7 @@ namespace ourVillage.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ourVillage.Models.ApplicationUser")
+                    b.HasOne("YourVillage.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -369,57 +371,57 @@ namespace ourVillage.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ourVillage.Models.ApplicationUser")
+                    b.HasOne("YourVillage.Models.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Address", b =>
+            modelBuilder.Entity("YourVillage.Models.Address", b =>
                 {
-                    b.HasOne("ourVillage.Models.Family")
+                    b.HasOne("YourVillage.Models.Family")
                         .WithMany("Addresses")
                         .HasForeignKey("FamilyId");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Child", b =>
+            modelBuilder.Entity("YourVillage.Models.Child", b =>
                 {
-                    b.HasOne("ourVillage.Models.Family", "Family")
+                    b.HasOne("YourVillage.Models.Family", "Family")
                         .WithMany("Children")
                         .HasForeignKey("FamilyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ourVillage.Models.ChildNote", b =>
+            modelBuilder.Entity("YourVillage.Models.ChildNote", b =>
                 {
-                    b.HasOne("ourVillage.Models.Child", "Child")
+                    b.HasOne("YourVillage.Models.Child", "Child")
                         .WithMany("Notes")
                         .HasForeignKey("ChildId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ourVillage.Models.Note", "Note")
+                    b.HasOne("YourVillage.Models.Note", "Note")
                         .WithMany("Children")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Contact", b =>
+            modelBuilder.Entity("YourVillage.Models.Contact", b =>
                 {
-                    b.HasOne("ourVillage.Models.Family")
+                    b.HasOne("YourVillage.Models.Family")
                         .WithMany("Contacts")
                         .HasForeignKey("FamilyId");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Note", b =>
+            modelBuilder.Entity("YourVillage.Models.Note", b =>
                 {
-                    b.HasOne("ourVillage.Models.ApplicationUser", "User")
+                    b.HasOne("YourVillage.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ourVillage.Models.Schedule", b =>
+            modelBuilder.Entity("YourVillage.Models.Schedule", b =>
                 {
-                    b.HasOne("ourVillage.Models.Child")
+                    b.HasOne("YourVillage.Models.Child")
                         .WithMany("DailySchedules")
                         .HasForeignKey("ChildId");
                 });

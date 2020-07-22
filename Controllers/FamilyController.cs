@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using ourVillage.Models;
+using YourVillage.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace ourVillage.Controllers
+namespace YourVillage.Controllers
 {
   public class FamilyController : Controller
   {
-    private readonly ourVillageContext _db;
+    private readonly YourVillageContext _db;
 
-    public FamilyController(ourVillageContext db)
+    public FamilyController(YourVillageContext db)
     {
       _db = db;
     }
