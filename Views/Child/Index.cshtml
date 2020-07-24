@@ -1,0 +1,36 @@
+@{
+  Layout = "_Layout";
+}
+
+@using YourVillage.Models;
+@model IEnumerable<YourVillage.Models.Family>;
+
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Family family in Model)
+    {
+      @foreach (Child child in ViewBag.Children)
+      {
+      <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
+      <ul>
+        <li>@Html.ActionLink("Add Health/Diet Info", "Child/AddHealthDietDetails", new {id = child.ChildId})</li>
+        <li>@Html.ActionLink("Add Routines", "Child/AddRoutines", new {id = child.ChildId})</li>
+        <li>@Html.ActionLink("Add Schedule", "Child/AddSchedule", new {id = child.ChildId})</li>
+        <li>@Html.ActionLink("Add School Info", "Child/AddSchoolInfo", new {id = child.ChildId})</li>
+        <li>@Html.ActionLink("Add Note", "Child/AddNote", new {id= child.ChildId})</li>
+        <li>@Html.ActionLink("Edit", "Child/Edit", new {id = child.ChildId})</li>
+      </ul>
+      }
+    }
+  </ul>
+}
+else
+{
+  <h3>You have no children in your Family Profile.</h3>
+}
+
+@foreach(Family family in Model) 
+{
+<p>@Html.ActionLink("Add Child to the $'{family.ProfileName}' Family", "Create", "Child", new {id = family.FamilyId})</p>
+}
