@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="~/css/styles.css">
   </head>
   <body>
-    @RenderBody()
+    <div class="Jumbotron">
+      @Html.Partial("NavBar")
+      <div class = "bodyText">
+        @RenderBody()
+      </div>
+    </div>
   </body>
 </html>
