@@ -1,24 +1,41 @@
 using Microsoft.AspNetCore.Mvc;
 using YourVillage.Models;
 using System.Collections.Generic;
+using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace YourVillage.Controllers
 {
+
+  [Authorize]
   public class FamilyController : Controller
   {
     private readonly YourVillageContext _db;
-
-    public FamilyController(YourVillageContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public FamilyController(YourVillageContext db, UserManager<ApplicationUser> userManager)
     {
       _db = db;
+      _userManager = userManager;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      List<Family> model = _db.Families.ToList();
-      return View(model);
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var userFamily = _db.Families.Where(entry => entry.ParentUser.Id == currentUser.Id);
+      ViewBag.Children = new List<Child>();
+      foreach (Family family in userFamily)
+      {
+        var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId));
+        ViewBag.Children.Add(child);
+      }
+      return View(userFamily);
     }
 
     public ActionResult Create()
@@ -45,8 +62,9 @@ namespace YourVillage.Controllers
       var thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
       return View(thisFamily);
     }
+    x
 
-    [HttpPost]
+   [HttpPost]
     public ActionResult Edit(Family family)
     {
       _db.Entry(family).State = EntityState.Modified;

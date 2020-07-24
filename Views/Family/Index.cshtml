@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+
+@using YourVillage.Models;
+@model IEnumerable<YourVillage.Models.Family>;
+
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Family family in Model)
+    {
+      @foreach (Child child in ViewBag.Children)
+      {
+      <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
+      }
+    }
+  </ul>
+}
+else
+{
+  <h3>You have no children in your Family Profile.</h3>
+}
+
+<p>@Html.ActionLink("Add new Child", "Child/Create")</p>

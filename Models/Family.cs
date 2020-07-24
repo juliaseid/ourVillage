@@ -10,6 +10,7 @@ namespace YourVillage.Models
     // }
     public int FamilyId { get; set; }
     public string ProfileName { get; set; }
+    public virtual ApplicationUser ParentUser { get; set; }
     public string Parent1FirstName { get; set; }
     public string Parent1LastName { get; set; }
     public string Parent1Phone { get; set; }
