@@ -62,9 +62,8 @@ namespace YourVillage.Controllers
       var thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
       return View(thisFamily);
     }
-    x
 
-   [HttpPost]
+    [HttpPost]
     public ActionResult Edit(Family family)
     {
       _db.Entry(family).State = EntityState.Modified;

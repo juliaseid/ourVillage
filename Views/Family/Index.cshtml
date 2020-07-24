@@ -22,4 +22,7 @@ else
   <h3>You have no children in your Family Profile.</h3>
 }
 
-<p>@Html.ActionLink("Add new Child", "Child/Create")</p>
+@foreach(Family family in Model) 
+{
+<p>@Html.ActionLink("Add Child to the $'{family.ProfileName}' Family", "Create", "Child", new {id = family.FamilyId})</p>
+}

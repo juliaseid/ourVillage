@@ -9,6 +9,7 @@
 @using (Html.BeginForm())
 {
   <div class = "well">
+    @Html.HiddenFor(ViewBag => ViewBag.Family.FamilyId)
     <p>First Name: </p>
     @Html.TextBoxFor(model => model.FirstName)
     <p>Last Name: </p> 
@@ -19,6 +20,8 @@
     <br>
     @Html.LabelFor(model => model.Nickname)   
     @Html.TextBoxFor(model => model.Nickname)
+
+
     <br>
   </div>
   <br>

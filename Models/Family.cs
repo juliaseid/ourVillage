@@ -4,10 +4,10 @@ namespace YourVillage.Models
 {
   public class Family
   {
-    // public Family()
-    // {
+    //   public Family()
+    //   {
 
-    // }
+    //   }
     public int FamilyId { get; set; }
     public string ProfileName { get; set; }
     public virtual ApplicationUser ParentUser { get; set; }

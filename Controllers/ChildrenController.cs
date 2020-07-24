@@ -4,16 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace YourVillage.Controllers
 {
-  public class ChildrenController : Controller
+  [Authorize]
+  public class ChildController : Controller
   {
     private readonly YourVillageContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ChildrenController(YourVillageContext db)
+
+    public ChildController(YourVillageContext db, UserManager<ApplicationUser> userManager)
     {
       _db = db;
+      _userManager = userManager;
     }
 
     public ActionResult Index()
@@ -29,8 +37,10 @@ namespace YourVillage.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Child child)
+    public ActionResult Create(int id, Child child)
     {
+      var thisFamily = _db.Families.Where(f => f.FamilyId == id);
+      ViewBag.Family = thisFamily;
       _db.Children.Add(child);
       _db.SaveChanges();
       return RedirectToAction("Index");
