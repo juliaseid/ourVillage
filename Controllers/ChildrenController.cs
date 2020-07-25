@@ -24,9 +24,22 @@ namespace YourVillage.Controllers
       _userManager = userManager;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      List<Child> model = _db.Children.Include(children => children.Family).ToList();
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var userFamily = _db.Families.Where(entry => entry.ParentUser.Id == currentUser.Id);
+      var model = new List<Child>();
+      ViewBag.Families = new List<Family>();
+      foreach (Family family in userFamily)
+      {
+        var children = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId));
+        ViewBag.Families.Add(family);
+        foreach (Child c in children)
+        {
+          model.Add(c);
+        }
+      }
       model = model.OrderBy(c => c.Birthday).ToList();
       return View(model);
     }

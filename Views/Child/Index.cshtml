@@ -3,14 +3,12 @@
 }
 
 @using YourVillage.Models;
-@model IEnumerable<YourVillage.Models.Family>;
+@model List<YourVillage.Models.Child>;
 
 @if (Model.Any())
 {
   <ul>
-    @foreach (Family family in Model)
-    {
-      @foreach (Child child in ViewBag.Children)
+      @foreach (Child child in Model)
       {
       <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
       <ul>
@@ -22,7 +20,6 @@
         <li>@Html.ActionLink("Edit", "Child/Edit", new {id = child.ChildId})</li>
       </ul>
       }
-    }
   </ul>
 }
 else
@@ -30,7 +27,7 @@ else
   <h3>You have no children in your Family Profile.</h3>
 }
 
-@foreach(Family family in Model) 
+@foreach (Family family in ViewBag.Families)
 {
-<p>@Html.ActionLink("Add Child to the $'{family.ProfileName}' Family", "Create", "Child", new {id = family.FamilyId})</p>
+<p>@Html.ActionLink("Add Child to the $'{family.ProfileName}' Family", "Create", "Child", new {id = family.FamilyId})</p>    
 }
