@@ -44,8 +44,11 @@ namespace YourVillage.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Family family)
+    public async Task<ActionResult> Create(Family family)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      ViewBag.Parent = currentUser;
       _db.Families.Add(family);
       _db.SaveChanges();
       return RedirectToAction("Index");

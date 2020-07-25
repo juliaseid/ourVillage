@@ -9,8 +9,10 @@
 {
     <h5>Give your family a name - maybe your last name, maybe something fun!</h5>@Html.LabelFor(model => model.ProfileName)
     @Html.TextBoxFor(model => model.ProfileName)
+    @Html.HiddenFor(ViewBag => ViewBag.ParentUser.Id)
     <br>
-    <div class = "well">
+    <div class = "row">
+      <div class = "col-md-4">
       <h5>Parent 1 Details:</h5>
       <p>First Name: </p>
       @Html.TextBoxFor(model => model.Parent1FirstName)
@@ -21,7 +23,7 @@
       <p>Phone: </p>
       @Html.TextBoxFor(model => model.Parent1Phone)
     </div>
-    <div class = "well">
+    <div class = "col-md-4">
       <h5>Parent 2 Details:</h5>
       <p>First Name: </p>
       @Html.TextBoxFor(model => model.Parent2FirstName)
@@ -31,6 +33,7 @@
       @Html.TextBoxFor(model => model.Parent2Relationship)
       <p>Phone: </p>
       @Html.TextBoxFor(model => model.Parent2Phone)
+    </div>
     </div>
     <input type="submit" value="Start building YourVillage!" class="btn-btnprimary"/>
 }
