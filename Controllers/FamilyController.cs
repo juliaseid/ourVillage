@@ -48,7 +48,7 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      ViewBag.Parent = currentUser;
+      ViewBag.ParentUser = currentUser;
       _db.Families.Add(family);
       _db.SaveChanges();
       return RedirectToAction("Index");

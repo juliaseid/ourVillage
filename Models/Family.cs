@@ -8,8 +8,8 @@ namespace YourVillage.Models
     public int FamilyId { get; set; }
     [Required]
     public string ProfileName { get; set; }
-    public virtual ApplicationUser ParentUser { get; set; }
-    public int ParentId { get; set; }
+    public ApplicationUser ParentUser { get; set; }
+    // public int ParentId { get; set; }
     [Required]
     public string Parent1FirstName { get; set; }
     [Required]
