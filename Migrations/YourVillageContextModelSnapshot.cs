@@ -175,6 +175,9 @@ namespace YourVillage.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
+                    b.Property<int>("ParentId")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<string>("PasswordHash");
 
                     b.Property<string>("PhoneNumber");
@@ -189,6 +192,8 @@ namespace YourVillage.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("ParentId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -275,13 +280,17 @@ namespace YourVillage.Migrations
                     b.Property<int>("FamilyId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Parent1FirstName");
+                    b.Property<string>("Parent1FirstName")
+                        .IsRequired();
 
-                    b.Property<string>("Parent1LastName");
+                    b.Property<string>("Parent1LastName")
+                        .IsRequired();
 
-                    b.Property<string>("Parent1Phone");
+                    b.Property<string>("Parent1Phone")
+                        .IsRequired();
 
-                    b.Property<string>("Parent1Relationship");
+                    b.Property<string>("Parent1Relationship")
+                        .IsRequired();
 
                     b.Property<string>("Parent2FirstName");
 
@@ -291,9 +300,12 @@ namespace YourVillage.Migrations
 
                     b.Property<string>("Parent2Relationship");
 
+                    b.Property<int>("ParentId");
+
                     b.Property<string>("ParentUserId");
 
-                    b.Property<string>("ProfileName");
+                    b.Property<string>("ProfileName")
+                        .IsRequired();
 
                     b.HasKey("FamilyId");
 
