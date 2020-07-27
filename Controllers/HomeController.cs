@@ -4,8 +4,13 @@ namespace YourVillage.Controllers
 {
   public class HomeController : Controller
   {
-    [HttpGet("/")]
+    [HttpGet()]
     public ActionResult Index()
+    {
+      return View();
+    }
+    [HttpGet("info")]
+    public ActionResult Info()
     {
       return View();
     }
