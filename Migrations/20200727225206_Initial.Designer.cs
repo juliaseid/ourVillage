@@ -9,7 +9,7 @@ using YourVillage.Models;
 namespace YourVillage.Migrations
 {
     [DbContext(typeof(YourVillageContext))]
-    [Migration("20200727174942_Initial")]
+    [Migration("20200727225206_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,6 +167,8 @@ namespace YourVillage.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<int>("FamilyId");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -176,9 +178,6 @@ namespace YourVillage.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
-
-                    b.Property<int>("ParentId")
-                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("PasswordHash");
 
@@ -195,7 +194,8 @@ namespace YourVillage.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("ParentId");
+                    b.HasIndex("FamilyId")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -302,16 +302,10 @@ namespace YourVillage.Migrations
 
                     b.Property<string>("Parent2Relationship");
 
-                    b.Property<int>("ParentId");
-
-                    b.Property<string>("ParentUserId");
-
                     b.Property<string>("ProfileName")
                         .IsRequired();
 
                     b.HasKey("FamilyId");
-
-                    b.HasIndex("ParentUserId");
 
                     b.ToTable("Families");
                 });
@@ -400,6 +394,14 @@ namespace YourVillage.Migrations
                         .HasForeignKey("FamilyId");
                 });
 
+            modelBuilder.Entity("YourVillage.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("YourVillage.Models.Family", "Family")
+                        .WithOne("ParentUser")
+                        .HasForeignKey("YourVillage.Models.ApplicationUser", "FamilyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("YourVillage.Models.Child", b =>
                 {
                     b.HasOne("YourVillage.Models.Family", "Family")
@@ -426,13 +428,6 @@ namespace YourVillage.Migrations
                     b.HasOne("YourVillage.Models.Family")
                         .WithMany("Contacts")
                         .HasForeignKey("FamilyId");
-                });
-
-            modelBuilder.Entity("YourVillage.Models.Family", b =>
-                {
-                    b.HasOne("YourVillage.Models.ApplicationUser", "ParentUser")
-                        .WithMany()
-                        .HasForeignKey("ParentUserId");
                 });
 
             modelBuilder.Entity("YourVillage.Models.Note", b =>

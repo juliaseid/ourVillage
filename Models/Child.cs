@@ -16,7 +16,8 @@ namespace YourVillage.Models
     public int Age { get; set; }
     public string AgeUnit { get; set; }
     public DateTime Birthday { get; set; }
-    public ICollection<Schedule> DailySchedules { get; set; }
+    public ChildProfile Profile { get; set; }
+    // public ICollection<Schedule> DailySchedules { get; set; }
     public ICollection<ChildNote> Notes { get; set; }
     public int FamilyId { get; set; }
     public Family Family { get; set; }

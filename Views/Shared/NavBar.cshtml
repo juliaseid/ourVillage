@@ -1,27 +1,27 @@
 <link rel="stylesheet" href="~/css/Styles.css" type="text/css" media="all">  
-
+<div class = "container">
 <div class = "row">
   <div class = "col-md-2">
     <img src='~/img/logo.png' alt="YourVillage Logo" height="200px" width="200px" class="logo">
   </div>
-  <div class = "col-md-4">
-@*  *@
-  </div>
-</div>
+
 <ul class="nav nav-tabs" class="nav">
-<div class="row">
-  <div class = "col-md-2">    
-      <li role="presentation"><a href="/">YourVillage Home</a></li>
-    </div>
       @if (User.Identity.IsAuthenticated)
       {
         <div class = "col-md-8">
+          <br/>
+          <br/>
           <li role = "presentation"><a href="/family/create">Create A New Family Profile</a></li>
           <li role="presentation"><a href="/family/addcaregiver">Add A Caregiver to YourVillage</a></li>
           <li role = "presentation"><a href="/child/create">Add A Child to Your Family</a></li>
           <li role="presentation"><a href="/family">Your Family</a></li>
         </div>
+
         <div class = "col-md-2">
+          <br/>
+          <br/>
+          <p role="presentation"><a href="/">YourVillage Home</a></p>
+          <br/>
           @using (Html.BeginForm("LogOff", "Account"))
           {
               <input type="submit" class="btn btn-default" value="Log out" />
@@ -30,14 +30,18 @@
       }
       else 
       {
+      <div class = "col-md-2">    
+        <br/><br/>
+      <p role="presentation"><a href="/">YourVillage Home</a></p>
+      </div>
       <div class = "col-md-4">
+        <br/><br/>
         <li role="presentation"><a href='/account/login'>Log In</a></li>
         <li role="presentation"><a href='/account/register'>Create An Account</a></li>
       </div>
       }
     </ul>
   </div>
-</div>
-    
+</div>    
 
 
