@@ -32,14 +32,16 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userFamily = _db.Families.Where(entry => (entry.ParentId == currentUser.Id || entry.CaregiverIds.Contains(currentUser.Id)));
+      var caregiver = _db.Caregivers.FirstOrDefault(entry => entry.CaregiverId == currentUser.Id);
+      var caregiverFamilies = caregiver.GetFamilyIds();
+      var userFamilies = _db.Families.Where(entry => (entry.ParentId == currentUser.Id || caregiverFamilies.Contains(entry.FamilyId)));
       ViewBag.Children = new List<Child>();
-      foreach (Family family in userFamily)
+      foreach (Family family in userFamilies)
       {
         var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId));
         ViewBag.Children.Add(child);
       }
-      return View(userFamily);
+      return View(userFamilies);
     }
 
     public ActionResult Create()
