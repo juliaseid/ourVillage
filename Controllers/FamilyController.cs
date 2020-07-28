@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using YourVillage.Authorization;
 
 namespace YourVillage.Controllers
 {
@@ -18,10 +19,13 @@ namespace YourVillage.Controllers
   {
     private readonly YourVillageContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
-    public FamilyController(YourVillageContext db, UserManager<ApplicationUser> userManager)
+    private readonly IAuthorizationService _authService;
+    public FamilyController(YourVillageContext db, UserManager<ApplicationUser> userManager, IAuthorizationService authService)
     {
       _db = db;
       _userManager = userManager;
+      _authService = authService;
+
     }
 
     public async Task<ActionResult> Index()
@@ -48,7 +52,13 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      ViewBag.ParentUser = currentUser;
+      family.ParentId = currentUser.Id;
+      // ViewBag.ParentUser = currentUser;
+      var isAuthorized = await _authService.AuthorizeAsync(User, family, YourVillageOperations.Create);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
       _db.Families.Add(family);
       _db.SaveChanges();
       return RedirectToAction("Index");
