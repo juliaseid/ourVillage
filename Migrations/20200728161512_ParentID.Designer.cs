@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourVillage.Models;
 
 namespace YourVillage.Migrations
 {
     [DbContext(typeof(YourVillageContext))]
-    partial class YourVillageContextModelSnapshot : ModelSnapshot
+    [Migration("20200728161512_ParentID")]
+    partial class ParentID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

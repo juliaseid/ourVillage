@@ -6,10 +6,9 @@ namespace YourVillage.Models
   public class Family
   {
     public int FamilyId { get; set; }
+    public string ParentId { get; set; }
     [Required]
     public string ProfileName { get; set; }
-    public ApplicationUser ParentUser { get; set; }
-
     [Required]
     public string Parent1FirstName { get; set; }
     [Required]

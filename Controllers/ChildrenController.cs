@@ -28,7 +28,7 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userFamily = _db.Families.Where(entry => entry.ParentUser.Id == currentUser.Id);
+      var userFamily = _db.Families.Where(entry => entry.ParentId == currentUser.Id);
       var model = new List<Child>();
       ViewBag.Families = new List<Family>();
       foreach (Family family in userFamily)
