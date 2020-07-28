@@ -32,9 +32,18 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var caregiver = _db.Caregivers.FirstOrDefault(entry => entry.CaregiverId == currentUser.Id);
-      var caregiverFamilies = caregiver.GetFamilyIds();
-      var userFamilies = _db.Families.Where(entry => (entry.ParentId == currentUser.Id || caregiverFamilies.Contains(entry.FamilyId)));
+      List<Family> userFamilies = new List<Family>();
+      var parentFamilies = (_db.Families.Where(entry => (entry.ParentId == currentUser.Id))).ToList();
+      if (parentFamilies != null)
+      {
+        userFamilies = parentFamilies;
+      }
+      else
+      {
+        var caregiver = _db.Caregivers.FirstOrDefault(entry => entry.CaregiverId == currentUser.Id);
+        var caregiverFamilies = caregiver.GetFamilyIds();
+        userFamilies = (_db.Families.Where(entry => (caregiverFamilies.Contains(entry.FamilyId)))).ToList();
+      }
       ViewBag.Children = new List<Child>();
       foreach (Family family in userFamilies)
       {

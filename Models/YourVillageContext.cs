@@ -13,6 +13,7 @@ namespace YourVillage.Models
     public DbSet<ChildNote> ChildNotes { get; set; }
     public DbSet<ChildProfile> ChildProfiles { get; set; }
     public DbSet<Caregiver> Caregivers { get; set; }
+    public DbSet<CaregiverFamily> CaregiverFamilies { get; set; }
     // public DbSet<Schedule> Schedules { get; set; }
     public YourVillageContext(DbContextOptions options) : base(options) { }
   }

@@ -9,9 +9,9 @@ namespace YourVillage.Authorization
   public class FamilyIsParentAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, Family>
 
   {
-    UserManager<IdentityUser> _userManager;
+    UserManager<ApplicationUser> _userManager;
 
-    public FamilyIsParentAuthorizationHandler(UserManager<IdentityUser> userManager)
+    public FamilyIsParentAuthorizationHandler(UserManager<ApplicationUser> userManager)
 
     {
       _userManager = userManager;
