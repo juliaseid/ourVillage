@@ -7,6 +7,7 @@ namespace YourVillage.Models
   {
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
+    public List<string> CaregiverIds { get; set; }
     [Required]
     public string ProfileName { get; set; }
     [Required]
