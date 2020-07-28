@@ -47,8 +47,8 @@ namespace YourVillage.Controllers
       ViewBag.Children = new List<Child>();
       foreach (Family family in userFamilies)
       {
-        var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId));
-        ViewBag.Children.Add(child);
+        var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId)).ToList();
+        ViewBag.Children = child;
       }
       return View(userFamilies);
     }
@@ -61,11 +61,6 @@ namespace YourVillage.Controllers
     [HttpPost]
     public async Task<ActionResult> Create(Family family)
     {
-      var isAuthorized = await _authService.AuthorizeAsync(User, family, YourVillageOperations.Create);
-      if (!isAuthorized.Succeeded)
-      {
-        return Forbid();
-      }
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       family.ParentId = currentUser.Id;

@@ -10,6 +10,9 @@
 <hr />
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name)
+    
     @Html.LabelFor(user => user.Email)
     @Html.TextBoxFor(user=> user.Email)
 

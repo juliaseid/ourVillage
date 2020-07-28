@@ -11,6 +11,7 @@ namespace YourVillage.Models
     // public int ParentId { get; set; }
     // public virtual Family Family { get; set; }
     // public int FamilyId { get; set; }
+    public string Name { get; set; }
   }
 }
 
