@@ -52,8 +52,8 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      family.ParentId = currentUser.Id;
       // ViewBag.ParentUser = currentUser;
+      family.ParentId = currentUser.Id;
       var isAuthorized = await _authService.AuthorizeAsync(User, family, YourVillageOperations.Create);
       if (!isAuthorized.Succeeded)
       {
@@ -64,9 +64,14 @@ namespace YourVillage.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult Details(int id)
+    public async Task<ActionResult> Details(int id)
     {
       Family thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
+      var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Read);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
       return View(thisFamily);
     }
 
@@ -77,8 +82,13 @@ namespace YourVillage.Controllers
     }
 
     [HttpPost]
-    public ActionResult Edit(Family family)
+    public async Task<ActionResult> Edit(Family family)
     {
+      var isAuthorized = await _authService.AuthorizeAsync(User, family, YourVillageOperations.Update);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
       _db.Entry(family).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -91,9 +101,14 @@ namespace YourVillage.Controllers
     }
 
     [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
+    public async Task<ActionResult> DeleteConfirmed(int id)
     {
       var thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
+      var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Delete);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
       _db.Families.Remove(thisFamily);
       _db.SaveChanges();
       return RedirectToAction("Index");
