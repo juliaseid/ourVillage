@@ -5,9 +5,13 @@ namespace YourVillage.Models
 {
   public class Family
   {
+    public Family()
+    {
+      this.Caregivers = new HashSet<Caregiver>();
+    }
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
-    public List<string> CaregiverIds { get; set; }
+    public ICollection<Caregiver> Caregivers { get; set; }
     [Required]
     public string ProfileName { get; set; }
     [Required]
@@ -26,7 +30,15 @@ namespace YourVillage.Models
     public virtual ICollection<Address> Addresses { get; set; }
     public virtual ICollection<Child> Children { get; set; }
     // public virtual ICollection<ApplicationUser> Caregivers { get; set; }
-
+    public List<string> GetCaregiverIds()
+    {
+      List<string> CaregiverIds = new List<string> { };
+      foreach (Caregiver c in Caregivers)
+      {
+        CaregiverIds.Add(c.CaregiverId);
+      }
+      return CaregiverIds;
+    }
   }
 }
 

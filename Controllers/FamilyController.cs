@@ -32,7 +32,7 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userFamily = _db.Families.Where(entry => entry.ParentId == currentUser.Id);
+      var userFamily = _db.Families.Where(entry => (entry.ParentId == currentUser.Id || entry.CaregiverIds.Contains(currentUser.Id)));
       ViewBag.Children = new List<Child>();
       foreach (Family family in userFamily)
       {
@@ -50,15 +50,14 @@ namespace YourVillage.Controllers
     [HttpPost]
     public async Task<ActionResult> Create(Family family)
     {
-      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      var currentUser = await _userManager.FindByIdAsync(userId);
-      // ViewBag.ParentUser = currentUser;
-      family.ParentId = currentUser.Id;
       var isAuthorized = await _authService.AuthorizeAsync(User, family, YourVillageOperations.Create);
       if (!isAuthorized.Succeeded)
       {
         return Forbid();
       }
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      family.ParentId = currentUser.Id;
       _db.Families.Add(family);
       _db.SaveChanges();
       return RedirectToAction("Index");

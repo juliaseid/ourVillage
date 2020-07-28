@@ -22,6 +22,7 @@ namespace YourVillage.Authorization
     OperationAuthorizationRequirement requirement,
     Family resource)
     {
+      var caregiverIds = resource.GetCaregiverIds();
       if (context.User == null || resource == null)
       {
         return Task.CompletedTask;
@@ -30,7 +31,7 @@ namespace YourVillage.Authorization
       {
         context.Succeed(requirement);
       }
-      else if (resource.CaregiverIds.Contains(_userManager.GetUserId(context.User)))
+      else if (caregiverIds.Contains(_userManager.GetUserId(context.User)))
       {
         if (requirement.Name == IdentityConstants.ReadOperationName || requirement.Name == IdentityConstants.NoteOperationName)
         {
@@ -42,6 +43,7 @@ namespace YourVillage.Authorization
         }
       }
       return Task.CompletedTask;
+
     }
   }
 }

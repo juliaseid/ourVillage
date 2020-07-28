@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using YourVillage.Models;
 using System.Threading.Tasks;
 using YourVillage.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YourVillage.Controllers
 {
+  [AllowAnonymous]
   public class AccountController : Controller
   {
     private readonly YourVillageContext _db;
