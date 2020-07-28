@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using YourVillage.Models;
+using YourVillage.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YourVillage
 {
@@ -30,17 +32,19 @@ namespace YourVillage
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
       services.AddDefaultIdentity<ApplicationUser>()
-      .AddRoles<IdentityRole>()
-      .AddEntityFrameworkStores<YourVillageContext>()
-      .AddDefaultTokenProviders();
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<YourVillageContext>()
+        .AddDefaultTokenProviders();
 
-      //This is only available in .NetCore 3.0+
-      // services.AddAuthorization(options =>
-      // {
-      //   options.FallbackPolicy = new AuthorizationPolicyBuilder()
-      //   .RequireAuthenticatedUser()
-      //   .Build();
-      // });
+      services.AddScoped<IAuthorizationHandler, FamilyIsParentAuthorizationHandler>();
+
+      // This is only available in .NetCore 3.0+
+      services.AddAuthorization(options =>
+      {
+        options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+      });
 
       services.Configure<IdentityOptions>(options =>
         {
