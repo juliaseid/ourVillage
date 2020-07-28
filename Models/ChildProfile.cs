@@ -6,7 +6,8 @@ namespace YourVillage.Models
   public class ChildProfile
   {
     public int ChildProfileId { get; set; }
-    public Child child { get; set; }
+    public virtual Child Child { get; set; }
+    public int ChildId { get; set; }
     public string MedicalConditions { get; set; }
     public string Medications { get; set; }
     public string Allergies { get; set; }

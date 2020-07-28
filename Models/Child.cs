@@ -8,6 +8,7 @@ namespace YourVillage.Models
     public Child()
     {
       this.Notes = new List<ChildNote>();
+      this.Profile = new HashSet<ChildProfile>();
     }
     public int ChildId { get; set; }
     public string FirstName { get; set; }
@@ -16,7 +17,7 @@ namespace YourVillage.Models
     public int Age { get; set; }
     public string AgeUnit { get; set; }
     public DateTime Birthday { get; set; }
-    public ChildProfile Profile { get; set; }
+    public ICollection<ChildProfile> Profile { get; set; }
     // public ICollection<Schedule> DailySchedules { get; set; }
     public ICollection<ChildNote> Notes { get; set; }
     public int FamilyId { get; set; }

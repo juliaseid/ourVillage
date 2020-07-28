@@ -9,7 +9,10 @@ namespace YourVillage.Models
     public DbSet<Child> Children { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Family> Families { get; set; }
-    public DbSet<Schedule> Schedules { get; set; }
+    public DbSet<Note> Notes { get; set; }
+    public DbSet<ChildNote> ChildNotes { get; set; }
+    public DbSet<ChildProfile> ChildProfiles { get; set; }
+    // public DbSet<Schedule> Schedules { get; set; }
     public YourVillageContext(DbContextOptions options) : base(options) { }
   }
 }

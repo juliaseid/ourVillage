@@ -9,8 +9,8 @@ namespace YourVillage.Models
     // [Key]
     // [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
     // public int ParentId { get; set; }
-    public virtual Family Family { get; set; }
-    public int FamilyId { get; set; }
+    // public virtual Family Family { get; set; }
+    // public int FamilyId { get; set; }
   }
 }
 
