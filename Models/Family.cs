@@ -7,11 +7,11 @@ namespace YourVillage.Models
   {
     public Family()
     {
-      this.Caregivers = new HashSet<Caregiver>();
+      this.Caregivers = new HashSet<CaregiverFamily>();
     }
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
-    public ICollection<Caregiver> Caregivers { get; set; }
+    public ICollection<CaregiverFamily> Caregivers { get; set; }
     [Required]
     public string ProfileName { get; set; }
     [Required]
@@ -33,7 +33,7 @@ namespace YourVillage.Models
     public List<string> GetCaregiverIds()
     {
       List<string> CaregiverIds = new List<string> { };
-      foreach (Caregiver c in Caregivers)
+      foreach (CaregiverFamily c in Caregivers)
       {
         CaregiverIds.Add(c.CaregiverId);
       }
