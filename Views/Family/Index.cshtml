@@ -5,24 +5,45 @@
 @using YourVillage.Models;
 @model IEnumerable<YourVillage.Models.Family>;
 
-@if (Model.Any())
-{
+<h4>YourVillage Family Profile</h4>
+
+<h5>Your Children</h5>
   <ul>
     @foreach (Family family in Model)
     {
-      @foreach (Child child in ViewBag.Children)
+      @if ((ViewBag.ParentChildren as List<Child>).Count != 0) 
       {
-      <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
+        foreach (Child child in ViewBag.ParentChildren)
+        {
+        <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
+        }
+      }
+      else 
+      {
+        <h3>You have no children in your Family Profile.</h3>
       }
     }
   </ul>
-}
-else
-{
-  <h3>You have no children in your Family Profile.</h3>
-}
 
 @foreach(Family family in Model) 
 {
 <p>@Html.ActionLink($"Add Child to the {family.ProfileName} Family", "Create", "Child", new {id = family.FamilyId})</p>
+}
+
+<h5>Your Caregivers</h5>
+@foreach (Family family in Model)
+{
+  @if(family.Caregivers.Count != 0)
+  {
+    foreach (var join in family.Caregivers)
+      {
+        <h5>@join.Caregiver.FirstName @join.Caregiver.LastName Phone: @join.Caregiver.Phone</h5>
+      }
+  }
+}
+
+<h5>Other Families In YourVillage - You are a caregiver for:</h5>
+@foreach (var join in ViewBag.CaregiverFamilies)
+{
+  <h5>@Html.ActionLink("@join.Family.ProfileName", "Child/Index", new {id = @join.Family.FamilyId})</h5>
 }

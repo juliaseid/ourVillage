@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,10 +8,13 @@ namespace YourVillage.Models
   {
     public Family()
     {
+      Random random = new Random();
       this.Caregivers = new HashSet<CaregiverFamily>();
+      this.SecretCode = random.Next(100000, 999999);
     }
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
+    private int SecretCode { get; set; }
     public ICollection<CaregiverFamily> Caregivers { get; set; }
     [Required]
     public string ProfileName { get; set; }

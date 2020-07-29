@@ -32,26 +32,43 @@ namespace YourVillage.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      List<Family> userFamilies = new List<Family>();
-      var parentFamilies = (_db.Families.Where(entry => (entry.ParentId == currentUser.Id))).ToList();
-      if (parentFamilies != null)
+      var userFamilies = (_db.Families.Where(entry => (entry.ParentId == currentUser.Id))).ToList();
+      // List<Family> caregiverFamilies = new List<Family>();
+      if ((_db.Caregivers.Select(entry => entry.CaregiverId == currentUser.Id)) != null)
       {
-        userFamilies = parentFamilies;
+        var careFamilies = _db.Caregivers
+        .Include(carer => carer.Families)
+        .ThenInclude(join => join.Family)
+        .FirstOrDefault(carer => carer.CaregiverId == currentUser.Id);
+        ViewBag.CaregiverFamilies = careFamilies;
+        // var caregiver = _db.Caregivers.FirstOrDefault(entry => entry.CaregiverId == currentUser.Id);
+        // var caregiverFamilyIds = caregiver.GetFamilyIds();
+        // caregiverFamilies = (_db.Families.Where(entry => (caregiverFamilyIds.Contains(entry.FamilyId)))).ToList();
       }
-      else
-      {
-        var caregiver = _db.Caregivers.FirstOrDefault(entry => entry.CaregiverId == currentUser.Id);
-        var caregiverFamilies = caregiver.GetFamilyIds();
-        userFamilies = (_db.Families.Where(entry => (caregiverFamilies.Contains(entry.FamilyId)))).ToList();
-      }
+
       ViewBag.Children = new List<Child>();
       foreach (Family family in userFamilies)
       {
         var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId)).ToList();
         ViewBag.Children = child;
       }
+      // ViewBag.CaregiverChildren = new List<Child>();
+      // foreach (Family family in caregiverFamilies)
+      // {
+      //   var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId)).ToList();
+      //   ViewBag.CaregiverChildren = child;
+      // }
+      foreach (Family family in userFamilies)
+      {
+        var babysitters = _db.Families
+        .Include(fam => fam.Caregivers)
+        .ThenInclude(join => join.Caregiver)
+        .FirstOrDefault(fam => fam.FamilyId == family.FamilyId);
+      }
       return View(userFamilies);
     }
+
+
 
     public ActionResult Create()
     {
