@@ -8,9 +8,8 @@ namespace YourVillage.Models
   {
     public Family()
     {
-      Random random = new Random();
       this.Caregivers = new HashSet<CaregiverFamily>();
-      this.SecretCode = random.Next(100000, 999999);
+      this.SecretCode = GetSecretCode();
       this.CaregiverIds = String.Join(",", GetCaregiverIds());
     }
     public int FamilyId { get; set; }
@@ -45,6 +44,13 @@ namespace YourVillage.Models
         CaregiverIds.Add(c.CaregiverId);
       }
       return CaregiverIds;
+    }
+
+    public int GetSecretCode()
+    {
+      Random random = new Random();
+      int code = random.Next(100000, 999999);
+      return code;
     }
   }
 }

@@ -8,9 +8,10 @@
 <h3>YourVillage Family Profile</h3>
 @foreach (Family family in Model)
 {
-  <p>@Html.ActionLink($"See Details for the {family.ProfileName}", "Details", new {id = family.FamilyId})</p>
+  <h5>@Html.ActionLink($"See Details for the {family.ProfileName} Family", "Details", new {id = family.FamilyId})</h5>
 }
-
+<br/>
+<br/>
 <h4>Your Children</h4>
   <ul>
     @foreach (Family family in Model)
@@ -50,9 +51,12 @@
   {
     <h5>You have not added any Caregivers to YourVillage.</h5>
   }
-  <p>@Html.ActionLink($"Add Caregiver to the {family.ProfileName} Family", "AddCaregiver", "Family", new {id = family.FamilyId})</p>
 }
 </ul>
+@foreach(Family family in Model) 
+{
+<p>@Html.ActionLink($"Add Caregiver to the {family.ProfileName} Family", "AddCaregiver", "Family", new {id = family.FamilyId})</p>
+}
 <br/>
 <br/>
 
@@ -71,8 +75,8 @@
   {
     <h5>You are not currently a Caregiver for any other families in YourVillage.</h5>
   }
-<p>@Html.ActionLink($"Become a Caregiver for another Family in YourVillage", "Family/CaregiverAccess", "Family")</p>
 }
 </ul>
+<p>@Html.ActionLink($"Become a Caregiver for another Family in YourVillage", "Family/CaregiverAccess", "Family")</p>
 
  
