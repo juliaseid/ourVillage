@@ -52,8 +52,9 @@ namespace YourVillage.Controllers
     [HttpPost]
     public ActionResult Create(int id, Child child)
     {
-      var thisFamily = _db.Families.Where(f => f.FamilyId == id);
+      var thisFamily = _db.Families.FirstOrDefault(f => f.FamilyId == id);
       ViewBag.Family = thisFamily;
+      child.FamilyId = thisFamily.FamilyId;
       _db.Children.Add(child);
       _db.SaveChanges();
       return RedirectToAction("Index");
