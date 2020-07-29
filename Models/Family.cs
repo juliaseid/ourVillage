@@ -11,11 +11,14 @@ namespace YourVillage.Models
       Random random = new Random();
       this.Caregivers = new HashSet<CaregiverFamily>();
       this.SecretCode = random.Next(100000, 999999);
+      this.CaregiverIds = String.Join(",", GetCaregiverIds());
     }
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
     private int SecretCode { get; set; }
     public ICollection<CaregiverFamily> Caregivers { get; set; }
+    // public List<string> CaregiverIds { get; set; }
+    public string CaregiverIds { get; set; }
     [Required]
     public string ProfileName { get; set; }
     [Required]

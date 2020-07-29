@@ -11,7 +11,7 @@
   <ul>
     @foreach (Family family in Model)
     {
-      @if ((ViewBag.ParentChildren as List<Child>).Count != 0) 
+      @if (ViewBag.ParentChildren != null) 
       {
         foreach (Child child in ViewBag.ParentChildren)
         {
@@ -43,7 +43,7 @@
 }
 
 <h5>Other Families In YourVillage - You are a caregiver for:</h5>
-@foreach (var join in ViewBag.CaregiverFamilies)
+@foreach (Family family in ViewBag.CaregiverFamilies)
 {
-  <h5>@Html.ActionLink("@join.Family.ProfileName", "Child/Index", new {id = @join.Family.FamilyId})</h5>
+  <h5>@Html.ActionLink($"{family.ProfileName}", "Child/Index", new {id = family.FamilyId})</h5>
 }

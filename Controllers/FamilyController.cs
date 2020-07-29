@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using YourVillage.Models;
 using System.Collections.Generic;
-using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -33,17 +32,11 @@ namespace YourVillage.Controllers
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var userFamilies = (_db.Families.Where(entry => (entry.ParentId == currentUser.Id))).ToList();
-      // List<Family> caregiverFamilies = new List<Family>();
+
       if ((_db.Caregivers.Select(entry => entry.CaregiverId == currentUser.Id)) != null)
       {
-        var careFamilies = _db.Caregivers
-        .Include(carer => carer.Families)
-        .ThenInclude(join => join.Family)
-        .FirstOrDefault(carer => carer.CaregiverId == currentUser.Id);
+        var careFamilies = (_db.Families.Where(entry => (entry.CaregiverIds.Contains(currentUser.Id)))).ToList();
         ViewBag.CaregiverFamilies = careFamilies;
-        // var caregiver = _db.Caregivers.FirstOrDefault(entry => entry.CaregiverId == currentUser.Id);
-        // var caregiverFamilyIds = caregiver.GetFamilyIds();
-        // caregiverFamilies = (_db.Families.Where(entry => (caregiverFamilyIds.Contains(entry.FamilyId)))).ToList();
       }
 
       ViewBag.Children = new List<Child>();
@@ -52,12 +45,7 @@ namespace YourVillage.Controllers
         var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId)).ToList();
         ViewBag.Children = child;
       }
-      // ViewBag.CaregiverChildren = new List<Child>();
-      // foreach (Family family in caregiverFamilies)
-      // {
-      //   var child = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId)).ToList();
-      //   ViewBag.CaregiverChildren = child;
-      // }
+
       foreach (Family family in userFamilies)
       {
         var babysitters = _db.Families
