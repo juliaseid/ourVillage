@@ -100,6 +100,31 @@ namespace YourVillage.Controllers
       return View(thisFamily);
     }
 
+    [AllowAnonymous]
+    public ActionResult CaregiverAccess()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CaregiverAccess(string profile, int code)
+    {
+      Family thisFamily = _db.Families.FirstOrDefault(family => family.ProfileName == profile);
+      var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Access);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      CaregiverFamily thisCaregiver = _db.CaregiverFamilies.FirstOrDefault(caregiver => caregiver.CaregiverId == currentUser.Id);
+      if (thisFamily.SecretCode == code)
+      {
+        thisFamily.Caregivers.Add(thisCaregiver);
+      }
+      return RedirectToAction("Index");
+    }
+
     public ActionResult Edit(int id)
     {
       var thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);

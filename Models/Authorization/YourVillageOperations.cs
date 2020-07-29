@@ -14,6 +14,8 @@ namespace YourVillage.Authorization
       new OperationAuthorizationRequirement { Name = IdentityConstants.DeleteOperationName };
     public static OperationAuthorizationRequirement Note =
       new OperationAuthorizationRequirement { Name = IdentityConstants.NoteOperationName };
+    public static OperationAuthorizationRequirement Access =
+      new OperationAuthorizationRequirement { Name = IdentityConstants.AccessOperationName };
   }
 
   public class IdentityConstants
@@ -23,5 +25,6 @@ namespace YourVillage.Authorization
     public static readonly string UpdateOperationName = "Update";
     public static readonly string DeleteOperationName = "Delete";
     public static readonly string NoteOperationName = "Note";
+    public static readonly string AccessOperationName = "CaregiverAccess";
   }
 }

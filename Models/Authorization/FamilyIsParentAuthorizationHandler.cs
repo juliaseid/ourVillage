@@ -33,7 +33,9 @@ namespace YourVillage.Authorization
       }
       else if (caregiverIds.Contains(_userManager.GetUserId(context.User)))
       {
-        if (requirement.Name == IdentityConstants.ReadOperationName || requirement.Name == IdentityConstants.NoteOperationName)
+        if (requirement.Name == IdentityConstants.ReadOperationName ||
+            requirement.Name == IdentityConstants.NoteOperationName ||
+            requirement.Name == IdentityConstants.AccessOperationName)
         {
           context.Succeed(requirement);
         }
