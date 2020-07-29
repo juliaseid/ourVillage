@@ -15,7 +15,7 @@ namespace YourVillage.Models
     }
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
-    private int SecretCode { get; set; }
+    public int SecretCode { get; set; }
     public ICollection<CaregiverFamily> Caregivers { get; set; }
     // public List<string> CaregiverIds { get; set; }
     public string CaregiverIds { get; set; }

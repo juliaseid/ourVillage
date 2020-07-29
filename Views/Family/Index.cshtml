@@ -5,9 +5,13 @@
 @using YourVillage.Models;
 @model IEnumerable<YourVillage.Models.Family>;
 
-<h4>YourVillage Family Profile</h4>
+<h3>YourVillage Family Profile</h3>
+@foreach (Family family in Model)
+{
+  <p>@Html.ActionLink($"See Details for the {family.ProfileName}", "Details", new {id = family.FamilyId})</p>
+}
 
-<h5>Your Children</h5>
+<h4>Your Children</h4>
   <ul>
     @foreach (Family family in Model)
     {
@@ -20,7 +24,7 @@
       }
       else 
       {
-        <h3>You have no children in your Family Profile.</h3>
+        <h5>You have no children in your Family Profile.</h5>
       }
     }
   </ul>
@@ -29,8 +33,10 @@
 {
 <p>@Html.ActionLink($"Add Child to the {family.ProfileName} Family", "Create", "Child", new {id = family.FamilyId})</p>
 }
-
-<h5>Your Caregivers</h5>
+<br/>
+<br/>
+<h4>Your Caregivers</h4>
+<ul>
 @foreach (Family family in Model)
 {
   @if(family.Caregivers.Count != 0)
@@ -40,10 +46,33 @@
         <h5>@join.Caregiver.FirstName @join.Caregiver.LastName Phone: @join.Caregiver.Phone</h5>
       }
   }
+  else 
+  {
+    <h5>You have not added any Caregivers to YourVillage.</h5>
+  }
+  <p>@Html.ActionLink($"Add Caregiver to the {family.ProfileName} Family", "AddCaregiver", "Family", new {id = family.FamilyId})</p>
 }
+</ul>
+<br/>
+<br/>
 
-<h5>Other Families In YourVillage - You are a caregiver for:</h5>
-@foreach (Family family in ViewBag.CaregiverFamilies)
+<h4>Other Families In YourVillage</h4>
+<ul>
+@foreach (Family careFamily in Model) 
 {
-  <h5>@Html.ActionLink($"{family.ProfileName}", "Child/Index", new {id = family.FamilyId})</h5>
+  @if ((ViewBag.CaregiverFamilies as List<Family>).Count() != 0)
+  {
+    @foreach (Family fam in ViewBag.CaregiverFamilies)
+    {
+      <h5>@Html.ActionLink($"{fam.ProfileName}", "Child/Index", new {id = fam.FamilyId})</h5>
+    }
+  }
+  else
+  {
+    <h5>You are not currently a Caregiver for any other families in YourVillage.</h5>
+  }
+<p>@Html.ActionLink($"Become a Caregiver for another Family in YourVillage", "Family/CaregiverAccess", "Family")</p>
 }
+</ul>
+
+ 

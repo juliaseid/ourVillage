@@ -1,0 +1,56 @@
+@{
+  Layout = "_Layout";
+}
+
+@model YourVillage.Models.Family;
+
+<h3>@Html.DisplayNameFor(model => model.ProfileName) Family Profile Details</h3>
+
+<div class="row">
+  <h4>Parents</h4>
+  <div class="col-md-4">
+    <h5>Parent 1</h5>
+    <ul>
+      <li>@Html.DisplayNameFor(model => model.Parent1FirstName) @Html.DisplayNameFor(model => model.Parent1LastName)</li>
+      <li>Phone: @Html.DisplayNameFor(model => model.Parent1Phone)</li>
+      <li>Relationship: @Html.DisplayNameFor(model => model.Parent1Relationship)</li>
+    </ul>
+  </div>
+  <div class="col-md-4">
+    <h5>Parent 2</h5>
+    <ul>
+      <li>@Html.DisplayNameFor(model => model.Parent2FirstName) @Html.DisplayNameFor(model => model.Parent2LastName)</li>
+      <li>Phone: @Html.DisplayNameFor(model => model.Parent2Phone)</li>
+      <li>Relationship: @Html.DisplayNameFor(model => model.Parent2Relationship)</li>
+    </ul>
+  </div>
+</div>
+
+<h4>Caregivers</h4>
+<div class = "row">
+  <div class="col-md-4">
+    <h5>Caregivers in YourVillage</h5>
+     @if(Model.Caregivers.Count != 0)
+      {
+        foreach (var join in Model.Caregivers)
+          {
+            <h5>@join.Caregiver.FirstName @join.Caregiver.LastName Phone: @join.Caregiver.Phone</h5>
+            <p>@Html.ActionLink("Remove Caregiver from YourVillage", "RemoveCaregiver", "Family", new {id = join.Caregiver.CaregiverId})</p>
+          }
+      }
+      else 
+      {
+        <h5>You have not added any Caregivers to YourVillage.</h5>
+      }
+  <p>@Html.ActionLink($"Add Caregiver to YourVillage", "AddCaregiver", "Family", new {id = Model.FamilyId})</p>
+  </div>
+  <div class="col-md-4">
+    <h5>Caregiver Code</h5>
+    <p>In order for a Caregiver to be added to YourVillage, that person will need to create a YourVillage account and request access to your Family Profile.</p>
+    <p>You will need to provide them with the following information:</p>
+    <ul>
+      <li>Profile Name: @Html.DisplayNameFor(model => model.ProfileName)</li>
+      <li>Family Code: @Html.DisplayNameFor(model => model.SecretCode)</li>
+    </ul>
+  </div>
+</div>

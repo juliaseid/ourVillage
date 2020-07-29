@@ -82,6 +82,10 @@ namespace YourVillage.Controllers
       {
         return Forbid();
       }
+      var babysitters = _db.Families
+      .Include(fam => fam.Caregivers)
+      .ThenInclude(join => join.Caregiver)
+      .FirstOrDefault(fam => fam.FamilyId == id);
       return View(thisFamily);
     }
 
