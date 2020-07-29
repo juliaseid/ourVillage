@@ -89,6 +89,17 @@ namespace YourVillage.Controllers
       return View(thisFamily);
     }
 
+    public async Task<ActionResult> AddCaregiver(int id)
+    {
+      Family thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
+      var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Update);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
+      return View(thisFamily);
+    }
+
     public ActionResult Edit(int id)
     {
       var thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
