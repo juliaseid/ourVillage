@@ -122,6 +122,8 @@ namespace YourVillage.Controllers
       {
         thisFamily.Caregivers.Add(thisCaregiver);
       }
+      _db.Entry(thisFamily).State = EntityState.Modified;
+      _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
