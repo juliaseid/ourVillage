@@ -5,24 +5,77 @@
 @using YourVillage.Models;
 @model IEnumerable<YourVillage.Models.Family>;
 
-@if (Model.Any())
+<h3>YourVillage Family Profile</h3>
+@foreach (Family family in Model)
 {
+  <h5>@Html.ActionLink($"See Details for the {family.ProfileName} Family", "Details", new {id = family.FamilyId})</h5>
+}
+<br/>
+
+<h4>Your Children</h4>
   <ul>
     @foreach (Family family in Model)
     {
-      @foreach (Child child in ViewBag.Children)
+      @if (ViewBag.Children != null) 
       {
-      <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
+        foreach (Child child in ViewBag.Children)
+        {
+        <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
+        }
+      }
+      else 
+      {
+        <h5>You have no children in your Family Profile.</h5>
       }
     }
   </ul>
-}
-else
-{
-  <h3>You have no children in your Family Profile.</h3>
-}
 
 @foreach(Family family in Model) 
 {
-<p>@Html.ActionLink("Add Child to the $'{family.ProfileName}' Family", "Create", "Child", new {id = family.FamilyId})</p>
+<p>@Html.ActionLink($"Add Child to the {family.ProfileName} Family", "Create", "Child", new {id = family.FamilyId})</p>
 }
+<br/>
+<br/>
+<h4>Your Caregivers</h4>
+<ul>
+@foreach (Family family in Model)
+{
+  @if(family.Caregivers.Count != 0)
+  {
+    foreach (var join in family.Caregivers)
+      {
+        <h5>@join.Caregiver.FirstName @join.Caregiver.LastName Phone: @join.Caregiver.Phone</h5>
+      }
+  }
+  else 
+  {
+    <h5>You have not added any Caregivers to YourVillage.</h5>
+  }
+}
+</ul>
+@foreach(Family family in Model) 
+{
+<p>@Html.ActionLink($"Add Caregiver to the {family.ProfileName} Family", "AddCaregiver", "Family", new {id = family.FamilyId})</p>
+}
+<br/>
+<br/>
+
+<h4>Other Families In YourVillage</h4>
+<ul>
+
+  @if ((ViewBag.CareFamilies as List<Family>).Count() != 0)
+  {
+    @foreach (Family fam in ViewBag.CareFamilies)
+    {
+      <h5>@Html.ActionLink($"{fam.ProfileName}", "Index", "Child", new {id = fam.FamilyId})</h5>
+    }
+  }
+  else
+  {
+    <h5>You are not currently a Caregiver for any other families in YourVillage.</h5>
+  }
+
+</ul>
+<p>@Html.ActionLink($"Become a Caregiver for another Family in YourVillage", "CaregiverAccess", "Family")</p>
+
+ 

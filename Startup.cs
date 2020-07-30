@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using YourVillage.Models;
+using YourVillage.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace YourVillage
 {
@@ -29,9 +31,20 @@ namespace YourVillage
         .AddDbContext<YourVillageContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
 
-      services.AddIdentity<ApplicationUser, IdentityRole>()
-      .AddEntityFrameworkStores<YourVillageContext>()
-      .AddDefaultTokenProviders();
+      services.AddDefaultIdentity<ApplicationUser>()
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<YourVillageContext>()
+        .AddDefaultTokenProviders();
+
+      services.AddScoped<IAuthorizationHandler, FamilyIsParentAuthorizationHandler>();
+
+      // This is only available in .NetCore 3.0+
+      services.AddAuthorization(options =>
+      {
+        options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+      });
 
       services.Configure<IdentityOptions>(options =>
         {
@@ -50,6 +63,7 @@ namespace YourVillage
       app.UseStaticFiles();
       app.UseDeveloperExceptionPage();
       app.UseAuthentication();
+
       app.UseMvc(routes =>
       {
         routes.MapRoute(
@@ -60,6 +74,10 @@ namespace YourVillage
       {
         await context.Response.WriteAsync("Something went wrong!");
       });
+
     }
+
+
+
   }
 }

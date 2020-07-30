@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
+
+
 
 namespace YourVillage.Controllers
 {
+  [AllowAnonymous]
   public class HomeController : Controller
   {
     [HttpGet()]

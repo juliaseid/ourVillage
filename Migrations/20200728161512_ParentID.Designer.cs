@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourVillage.Models;
 
 namespace YourVillage.Migrations
 {
     [DbContext(typeof(YourVillageContext))]
-    partial class YourVillageContextModelSnapshot : ModelSnapshot
+    [Migration("20200728161512_ParentID")]
+    partial class ParentID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +171,6 @@ namespace YourVillage.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Name");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -200,48 +200,6 @@ namespace YourVillage.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("YourVillage.Models.Caregiver", b =>
-                {
-                    b.Property<string>("CaregiverId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Emergency");
-
-                    b.Property<bool>("Evenings");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("Phone");
-
-                    b.Property<bool>("Weekdays");
-
-                    b.Property<bool>("Weekends");
-
-                    b.HasKey("CaregiverId");
-
-                    b.ToTable("Caregivers");
-                });
-
-            modelBuilder.Entity("YourVillage.Models.CaregiverFamily", b =>
-                {
-                    b.Property<int>("CaregiverFamilyId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CaregiverId");
-
-                    b.Property<int>("FamilyId");
-
-                    b.HasKey("CaregiverFamilyId");
-
-                    b.HasIndex("CaregiverId");
-
-                    b.HasIndex("FamilyId");
-
-                    b.ToTable("CaregiverFamilies");
                 });
 
             modelBuilder.Entity("YourVillage.Models.Child", b =>
@@ -363,8 +321,6 @@ namespace YourVillage.Migrations
                     b.Property<int>("FamilyId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CaregiverIds");
-
                     b.Property<string>("Parent1FirstName")
                         .IsRequired();
 
@@ -389,8 +345,6 @@ namespace YourVillage.Migrations
 
                     b.Property<string>("ProfileName")
                         .IsRequired();
-
-                    b.Property<int>("SecretCode");
 
                     b.HasKey("FamilyId");
 
@@ -463,18 +417,6 @@ namespace YourVillage.Migrations
                     b.HasOne("YourVillage.Models.Family")
                         .WithMany("Addresses")
                         .HasForeignKey("FamilyId");
-                });
-
-            modelBuilder.Entity("YourVillage.Models.CaregiverFamily", b =>
-                {
-                    b.HasOne("YourVillage.Models.Caregiver", "Caregiver")
-                        .WithMany("Families")
-                        .HasForeignKey("CaregiverId");
-
-                    b.HasOne("YourVillage.Models.Family", "Family")
-                        .WithMany("Caregivers")
-                        .HasForeignKey("FamilyId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("YourVillage.Models.Child", b =>

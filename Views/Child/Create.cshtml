@@ -4,11 +4,11 @@
 
 @model YourVillage.Models.Child
 
-<h3>Add a new Child to your Family Profile</h3>
+
+<h4>Add a new Child to your Family Profile</h4>
 
 @using (Html.BeginForm())
 {
-  <div class = "well">
     @Html.HiddenFor(ViewBag => ViewBag.Family.FamilyId)
     <p>First Name: </p>
     @Html.TextBoxFor(model => model.FirstName)
@@ -22,11 +22,10 @@
     @Html.TextBoxFor(model => model.Nickname)
 
 
-    <br>
-  </div>
-  <br>
+    <br/>
+  <br/>
 
-    <input type="submit" value="Add Child" class="btn btn-primary" />
+    <input type="submit" value="Add Child" class="btn btn-primary"/>
 }
-<br>
-<p><b>@Html.ActionLink("Your Children", "Index")</b></p>
+<br/>
+@* <p><b>@Html.ActionLink("Your Children", "Index", new { id = model.FamilyId })</b></p> *@

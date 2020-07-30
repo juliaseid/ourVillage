@@ -27,7 +27,6 @@ else
   <h3>You have no children in your Family Profile.</h3>
 }
 
-@foreach (Family family in ViewBag.Families)
-{
-<p>@Html.ActionLink("Add Child to the $'{family.ProfileName}' Family", "Create", "Child", new {id = family.FamilyId})</p>    
-}
+
+<p>@Html.ActionLink($"Add Child to the {ViewBag.Family.ProfileName} Family", "Create", "Child", new {id = ViewBag.Family.FamilyId})</p>    
+

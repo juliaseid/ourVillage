@@ -3,11 +3,11 @@ using YourVillage.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System;
 
 namespace YourVillage.Controllers
 {
@@ -24,24 +24,35 @@ namespace YourVillage.Controllers
       _userManager = userManager;
     }
 
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> Index(int id)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userFamily = _db.Families.Where(entry => entry.ParentUser.Id == currentUser.Id);
-      var model = new List<Child>();
-      ViewBag.Families = new List<Family>();
-      foreach (Family family in userFamily)
+      var thisFamily = _db.Families.FirstOrDefault(entry => entry.FamilyId == id);
+      Console.WriteLine("thisFamily" + thisFamily.ProfileName);
+      ViewBag.Family = thisFamily;
+      // var model = new List<Child>();
+      List<Child> children = new List<Child>();
+      Console.WriteLine(children.Count);
+      if (_db.Children.Select(entry => (entry.FamilyId == id)) != null)
       {
-        var children = (_db.Children.Where(entry => entry.FamilyId == family.FamilyId));
-        ViewBag.Families.Add(family);
-        foreach (Child c in children)
-        {
-          model.Add(c);
-        }
+        Console.WriteLine("In conditional - there are children!");
+        children = (_db.Children.Where(entry => entry.FamilyId == thisFamily.FamilyId)).ToList();
+        foreach (Child c in children) { Console.WriteLine("child name: " + c.FirstName); };
+        return View(children);
       }
-      model = model.OrderBy(c => c.Birthday).ToList();
-      return View(model);
+      else
+      {
+        return RedirectToAction("Create");
+      }
+
+      // foreach (Child c in children)
+      // {
+      //   model.Add(c);
+      // }
+
+      // model = model.OrderBy(c => c.Birthday).ToList();
+      // return View(children);
     }
 
     public ActionResult Create()
@@ -50,13 +61,16 @@ namespace YourVillage.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(int id, Child child)
+    public async Task<ActionResult> Create(int id, Child child)
     {
-      var thisFamily = _db.Families.Where(f => f.FamilyId == id);
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var thisFamily = _db.Families.FirstOrDefault(f => f.ParentId == currentUser.Id);
       ViewBag.Family = thisFamily;
+      child.FamilyId = thisFamily.FamilyId;
       _db.Children.Add(child);
       _db.SaveChanges();
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", "Family", new { id = thisFamily.FamilyId });
     }
 
     public ActionResult Details(int id)

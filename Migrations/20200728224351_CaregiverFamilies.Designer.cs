@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YourVillage.Models;
 
 namespace YourVillage.Migrations
 {
     [DbContext(typeof(YourVillageContext))]
-    partial class YourVillageContextModelSnapshot : ModelSnapshot
+    [Migration("20200728224351_CaregiverFamilies")]
+    partial class CaregiverFamilies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +171,6 @@ namespace YourVillage.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Name");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -207,19 +207,11 @@ namespace YourVillage.Migrations
                     b.Property<string>("CaregiverId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Emergency");
-
-                    b.Property<bool>("Evenings");
-
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
 
                     b.Property<string>("Phone");
-
-                    b.Property<bool>("Weekdays");
-
-                    b.Property<bool>("Weekends");
 
                     b.HasKey("CaregiverId");
 
@@ -363,8 +355,6 @@ namespace YourVillage.Migrations
                     b.Property<int>("FamilyId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CaregiverIds");
-
                     b.Property<string>("Parent1FirstName")
                         .IsRequired();
 
@@ -389,8 +379,6 @@ namespace YourVillage.Migrations
 
                     b.Property<string>("ProfileName")
                         .IsRequired();
-
-                    b.Property<int>("SecretCode");
 
                     b.HasKey("FamilyId");
 

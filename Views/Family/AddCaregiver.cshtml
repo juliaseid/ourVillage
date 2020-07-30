@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@model YourVillage.Models.Family;
+
+<h4>Adding Caregivers to YourVillage</h4>
+
+<h5>If you have a trusted Caregiver who you would like to have access to your Family Profile, here's the process:</h5>
+
+<ol>
+  <li>Get your access information:
+    <ul>
+      <li>Profile Name: @Html.DisplayFor(model => model.ProfileName)</li>
+      <li>Family Code: @Html.DisplayFor(model => model.SecretCode)</li>
+    </ul>
+  </li>
+  <li>Contact your Caregiver in person and provide them with your Profile Name and Family Code.  We recommend doing this offline for the greatest security!</li>
+  <li>The Caregiver logs in to their YourVillage account (or creates a new one!)</li>
+  <li>From their dashboard, the Caregiver clicks "Become a Caregiver for another Family in YourVillage".</li>
+  <li>The Caregiver enters the Profile Name and Family Code you provided.</li>
+  <li>We verify that the Caregiver has provided correct information before granting them access to view your Family Profile.</li>
+  <li>The Caregiver will now be visible in your list of Caregivers in YourVillage.</li>
+  <li>If, at any time, you want to remove the Caregiver from your Village, you may do so, and that person will no longer have access to view your Family Profile.</li>
+  <li>You may generate a new Family Code at any time.</li>
+</ol>

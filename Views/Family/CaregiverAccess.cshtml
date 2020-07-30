@@ -1,0 +1,20 @@
+@{
+  Layout = "_Layout";
+}
+@model YourVillage.Models.Caregiver
+
+<h4>Caregiver Access - Join A Family in YourVillage</h4>
+<br/>
+
+@using (Html.BeginForm("CaregiverAccess", "Family", FormMethod.Post))
+{
+  <div class="form-group">
+    <label for="profile">Family Profile Name: </label>
+    <input type="text" class="form-control" id="profile" name="profile">
+  </div>
+  <div class="form-group">
+    <label for="code">Family Access Code: </label>
+    <input type="number" class="form-control" id="code" name="code">
+  </div>
+  <input type="submit" value = "Get Caregiver Access" class = "btn-btnprimary">
+}
