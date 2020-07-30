@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using YourVillage.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -117,12 +116,24 @@ namespace YourVillage.Controllers
       }
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
+
+      if (_db.Caregivers.Where(c => (c.CaregiverId == currentUser.Id)) == null)
+      {
+        Caregiver caregiver = new Caregiver { CaregiverId = currentUser.Id };
+        _db.Caregivers.Add(caregiver);
+        _db.SaveChanges();
+      }
+
       CaregiverFamily thisCaregiver = _db.CaregiverFamilies.FirstOrDefault(caregiver => caregiver.CaregiverId == currentUser.Id);
       if (thisFamily.SecretCode == code)
       {
-        thisFamily.Caregivers.Add(thisCaregiver);
+        _db.CaregiverFamilies.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
       }
-      _db.Entry(thisFamily).State = EntityState.Modified;
+      else
+      {
+        return View();
+      }
+      _db.Entry(thisFamily).Collection(f => f.Caregivers).IsModified = true;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
