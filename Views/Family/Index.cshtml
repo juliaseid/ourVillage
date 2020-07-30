@@ -62,8 +62,7 @@
 
 <h4>Other Families In YourVillage</h4>
 <ul>
-@foreach (Family careFamily in Model) 
-{
+
   @if ((ViewBag.CaregiverFamilies as List<Family>).Count() != 0)
   {
     @foreach (Family fam in ViewBag.CaregiverFamilies)
@@ -75,7 +74,7 @@
   {
     <h5>You are not currently a Caregiver for any other families in YourVillage.</h5>
   }
-}
+
 </ul>
 <p>@Html.ActionLink($"Become a Caregiver for another Family in YourVillage", "CaregiverAccess", "Family")</p>
 

@@ -32,9 +32,20 @@ namespace YourVillage.Controllers
       var currentUser = await _userManager.FindByIdAsync(userId);
       var userFamilies = (_db.Families.Where(entry => (entry.ParentId == currentUser.Id))).ToList();
 
-      if ((_db.Caregivers.Select(entry => entry.CaregiverId == currentUser.Id)) != null)
+      if (_db.Caregivers.Select(entry => (entry.CaregiverId == currentUser.Id)) != null)
       {
-        var careFamilies = (_db.Families.Where(entry => (entry.CaregiverIds.Contains(currentUser.Id)))).ToList();
+        var careFamilies = new List<Family>();
+        var allFamilies = _db.Families.ToList();
+        foreach (Family family in allFamilies)
+        {
+          foreach (CaregiverFamily caregiver in family.Caregivers)
+          {
+            if (caregiver.CaregiverId == currentUser.Id)
+            {
+              careFamilies.Add(family);
+            }
+          }
+        }
         ViewBag.CaregiverFamilies = careFamilies;
       }
 
@@ -129,12 +140,15 @@ namespace YourVillage.Controllers
       if (thisFamily.SecretCode == code)
       {
         _db.CaregiverFamilies.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
+        thisFamily.Caregivers.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
+        // thisFamily.CaregiverIds.Concat(currentUser.Id);
+        // _db.Families.Update(thisFamily);
       }
       else
       {
         return View();
       }
-      _db.Entry(thisFamily).Collection(f => f.Caregivers).IsModified = true;
+      _db.Entry(thisFamily).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
