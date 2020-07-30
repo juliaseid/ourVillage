@@ -1,0 +1,30 @@
+@{
+  Layout = "_Layout";
+}
+
+@model YourVillage.Models.Caregiver
+
+<h4>Create a Caregiver Profile</h4>
+
+@using(Html.BeginForm())
+{
+    <p>First Name: </p>
+    @Html.TextBoxFor(model => model.FirstName)
+    <p>Last Name: </p> 
+    @Html.TextBoxFor(model => model.LastName)
+    <br>
+    @Html.LabelFor(model => model.Phone)  
+    @Html.TextBoxFor(model => model.Phone)
+    <br>
+    <p>When are you available?</p>
+    @Html.LabelFor(model => model.Evenings)   
+    @Html.CheckBoxFor(model => model.Evenings)
+    @Html.LabelFor(model => model.Weekends)   
+    @Html.CheckBoxFor(model => model.Weekends)
+    @Html.LabelFor(model => model.Weekdays)   
+    @Html.CheckBoxFor(model => model.Weekdays)
+    @Html.LabelFor(model => model.Emergency)   
+    @Html.CheckBoxFor(model => model.Emergency)
+    <br/>
+    <input type="submit" value="Create Caregiver Profile" class="btn-btnprimary">
+}

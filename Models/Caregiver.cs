@@ -13,7 +13,10 @@ namespace YourVillage.Models
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Phone { get; set; }
-    // public ICollection<Family> Families { get; set; }
+    public bool Evenings { get; set; }
+    public bool Weekends { get; set; }
+    public bool Weekdays { get; set; }
+    public bool Emergency { get; set; }
     public virtual ICollection<CaregiverFamily> Families { get; set; }
     public List<int> GetFamilyIds()
     {

@@ -100,31 +100,32 @@ namespace YourVillage.Controllers
     }
 
     [AllowAnonymous]
-    public ActionResult CaregiverAccess()
+    public async Task<ActionResult> CaregiverAccess(bool isCaregiver)
     {
-      return View();
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      if (_db.Caregivers.Where(c => (c.CaregiverId == currentUser.Id)).ToList().Count != 0)
+      {
+        return View();
+      }
+      else
+      {
+        return RedirectToAction("Create", "Caregiver");
+      }
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<ActionResult> CaregiverAccess(string profile, int code)
     {
       Family thisFamily = _db.Families.FirstOrDefault(family => family.ProfileName == profile);
-      var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Access);
-      if (!isAuthorized.Succeeded)
-      {
-        return Forbid();
-      }
+      // var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Access);
+      // if (!isAuthorized.Succeeded)
+      // {
+      //   return Forbid();
+      // }
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-
-      if (_db.Caregivers.Where(c => (c.CaregiverId == currentUser.Id)) == null)
-      {
-        Caregiver caregiver = new Caregiver { CaregiverId = currentUser.Id };
-        _db.Caregivers.Add(caregiver);
-        _db.SaveChanges();
-      }
-
-      CaregiverFamily thisCaregiver = _db.CaregiverFamilies.FirstOrDefault(caregiver => caregiver.CaregiverId == currentUser.Id);
       if (thisFamily.SecretCode == code)
       {
         _db.CaregiverFamilies.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });

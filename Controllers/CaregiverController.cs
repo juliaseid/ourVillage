@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace YourVillage.Controllers
 {
-  [Authorize]
+  [AllowAnonymous]
   public class CaregiverController : Controller
   {
     private readonly YourVillageContext _db;
@@ -21,6 +21,22 @@ namespace YourVillage.Controllers
     {
       _db = db;
       _userManager = userManager;
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create(Caregiver caregiver)
+    {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      caregiver.CaregiverId = currentUser.Id;
+      _db.Caregivers.Add(caregiver);
+      _db.SaveChanges();
+      return RedirectToAction("CaregiverAccess", "Family");
     }
 
 
