@@ -11,14 +11,14 @@
   <h5>@Html.ActionLink($"See Details for the {family.ProfileName} Family", "Details", new {id = family.FamilyId})</h5>
 }
 <br/>
-<br/>
+
 <h4>Your Children</h4>
   <ul>
     @foreach (Family family in Model)
     {
-      @if (ViewBag.ParentChildren != null) 
+      @if (ViewBag.Children != null) 
       {
-        foreach (Child child in ViewBag.ParentChildren)
+        foreach (Child child in ViewBag.Children)
         {
         <h5>@Html.ActionLink($"{child.FirstName}", "Child/Details", new { id = child.ChildId })</h5>
         }
@@ -67,7 +67,7 @@
   {
     @foreach (Family fam in ViewBag.CareFamilies)
     {
-      <h5>@Html.ActionLink($"{fam.ProfileName}", "Child/Index", new {id = fam.FamilyId})</h5>
+      <h5>@Html.ActionLink($"{fam.ProfileName}", "Index", "Child", new {id = fam.FamilyId})</h5>
     }
   }
   else

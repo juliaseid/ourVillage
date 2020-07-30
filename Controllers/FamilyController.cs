@@ -35,29 +35,7 @@ namespace YourVillage.Controllers
 
       if (_db.Caregivers.Select(entry => (entry.CaregiverId == currentUser.Id)) != null)
       {
-        Console.WriteLine("Yes, we made it into conditional");
-        // var careFamilies = new List<Family>();
-        // var allFamilies = _db.CaregiverFamilies.ToList();
-        // Console.WriteLine("ALL FAMILIES " + allFamilies.Count());
-        // foreach (CaregiverFamily family  in allFamilies)
-        // {
-        //   Console.WriteLine("ALL CAREGIVERS" + family.CaregiverId);
-        //   foreach (family.CaregiverId in )
-        //   {
-        //     Console.WriteLine("CurrentUser.Id" + currentUser.Id + " CaregiverId " + caregiver.CaregiverId);
-        //     if (caregiver.CaregiverId == currentUser.Id)
-        //     {
-        //       Console.WriteLine("CaregiverId matches currentUser.Id");
-        //       careFamilies.Add(family);
-        //     }
-        //   }
-        // }
-        // foreach (Family family in userFamilies)
-        // {
-        // var careFamilies = _db.Caregivers
-        // .Include(c => c.Families)
-        // .ThenInclude(join => join.Family)
-        // .Where(c => c.CaregiverId == currentUser.Id);
+
         var famout = new List<Family>();
         var careFamilies = _db.CaregiverFamilies
         .Where(c => c.CaregiverId == currentUser.Id);
@@ -65,15 +43,9 @@ namespace YourVillage.Controllers
         {
           foreach (CaregiverFamily cf in careFamilies)
           {
-            // famout.Add(cf.Family);
             famout.Add(_db.Families.FirstOrDefault(f => f.FamilyId == cf.FamilyId));
-            // Console.WriteLine(cf.Family.ProfileName);
           }
         }
-        // }
-        Console.WriteLine(famout.Count());
-
-
         ViewBag.CareFamilies = famout;
       }
 
@@ -168,7 +140,7 @@ namespace YourVillage.Controllers
       if (thisFamily.SecretCode == code)
       {
         _db.CaregiverFamilies.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
-        thisFamily.Caregivers.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
+        // thisFamily.Caregivers.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
         // thisFamily.CaregiverIds.Concat(currentUser.Id);
         // _db.Families.Update(thisFamily);
       }
