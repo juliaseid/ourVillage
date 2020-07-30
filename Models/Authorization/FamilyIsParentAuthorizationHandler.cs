@@ -27,6 +27,13 @@ namespace YourVillage.Authorization
       {
         return Task.CompletedTask;
       }
+      else if (context.User != null)
+      {
+        if (requirement.Name == IdentityConstants.AccessOperationName)
+        {
+          context.Succeed(requirement);
+        }
+      }
       else if (resource.ParentId == _userManager.GetUserId(context.User))
       {
         context.Succeed(requirement);
