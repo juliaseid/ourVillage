@@ -63,9 +63,9 @@
 <h4>Other Families In YourVillage</h4>
 <ul>
 
-  @if ((ViewBag.CaregiverFamilies as List<Family>).Count() != 0)
+  @if ((ViewBag.CareFamilies as List<Family>).Count() != 0)
   {
-    @foreach (Family fam in ViewBag.CaregiverFamilies)
+    @foreach (Family fam in ViewBag.CareFamilies)
     {
       <h5>@Html.ActionLink($"{fam.ProfileName}", "Child/Index", new {id = fam.FamilyId})</h5>
     }

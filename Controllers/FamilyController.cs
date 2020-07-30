@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using YourVillage.Authorization;
+using System;
 
 namespace YourVillage.Controllers
 {
@@ -34,19 +35,46 @@ namespace YourVillage.Controllers
 
       if (_db.Caregivers.Select(entry => (entry.CaregiverId == currentUser.Id)) != null)
       {
-        var careFamilies = new List<Family>();
-        var allFamilies = _db.Families.ToList();
-        foreach (Family family in allFamilies)
+        Console.WriteLine("Yes, we made it into conditional");
+        // var careFamilies = new List<Family>();
+        // var allFamilies = _db.CaregiverFamilies.ToList();
+        // Console.WriteLine("ALL FAMILIES " + allFamilies.Count());
+        // foreach (CaregiverFamily family  in allFamilies)
+        // {
+        //   Console.WriteLine("ALL CAREGIVERS" + family.CaregiverId);
+        //   foreach (family.CaregiverId in )
+        //   {
+        //     Console.WriteLine("CurrentUser.Id" + currentUser.Id + " CaregiverId " + caregiver.CaregiverId);
+        //     if (caregiver.CaregiverId == currentUser.Id)
+        //     {
+        //       Console.WriteLine("CaregiverId matches currentUser.Id");
+        //       careFamilies.Add(family);
+        //     }
+        //   }
+        // }
+        // foreach (Family family in userFamilies)
+        // {
+        // var careFamilies = _db.Caregivers
+        // .Include(c => c.Families)
+        // .ThenInclude(join => join.Family)
+        // .Where(c => c.CaregiverId == currentUser.Id);
+        var famout = new List<Family>();
+        var careFamilies = _db.CaregiverFamilies
+        .Where(c => c.CaregiverId == currentUser.Id);
+        if (careFamilies.Count() != 0)
         {
-          foreach (CaregiverFamily caregiver in family.Caregivers)
+          foreach (CaregiverFamily cf in careFamilies)
           {
-            if (caregiver.CaregiverId == currentUser.Id)
-            {
-              careFamilies.Add(family);
-            }
+            // famout.Add(cf.Family);
+            famout.Add(_db.Families.FirstOrDefault(f => f.FamilyId == cf.FamilyId));
+            // Console.WriteLine(cf.Family.ProfileName);
           }
         }
-        ViewBag.CaregiverFamilies = careFamilies;
+        // }
+        Console.WriteLine(famout.Count());
+
+
+        ViewBag.CareFamilies = famout;
       }
 
       ViewBag.Children = new List<Child>();
