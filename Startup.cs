@@ -13,7 +13,7 @@ namespace YourVillage
 {
   public class Startup
   {
-    public Startup(IHostingEnvironment env)
+    public Startup(IWebHostEnvironment env)
     {
       var builder = new ConfigurationBuilder()
           .SetBasePath(env.ContentRootPath)
@@ -25,7 +25,7 @@ namespace YourVillage
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc();
+      services.AddMvc(option => option.EnableEndpointRouting = false);
 
       services.AddEntityFrameworkMySql()
         .AddDbContext<YourVillageContext>(options => options

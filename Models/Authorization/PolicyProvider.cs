@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-// using YourVillage.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
@@ -21,6 +20,11 @@ namespace YourVillage.Authorization
     public Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
     {
       return defaultPolicyProvider.GetPolicyAsync(policyName);
+    }
+
+    public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
+    {
+      return defaultPolicyProvider.GetDefaultPolicyAsync();
     }
   }
 }

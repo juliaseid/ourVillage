@@ -23,11 +23,58 @@ namespace YourVillage.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Caregivers",
+                columns: table => new
+                {
+                    CaregiverId = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Evenings = table.Column<bool>(nullable: false),
+                    Weekends = table.Column<bool>(nullable: false),
+                    Weekdays = table.Column<bool>(nullable: false),
+                    Emergency = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Caregivers", x => x.CaregiverId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Families",
                 columns: table => new
                 {
                     FamilyId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ParentId = table.Column<string>(nullable: true),
+                    SecretCode = table.Column<int>(nullable: false),
+                    CaregiverIds = table.Column<string>(nullable: true),
                     ProfileName = table.Column<string>(nullable: false),
                     Parent1FirstName = table.Column<string>(nullable: false),
                     Parent1LastName = table.Column<string>(nullable: false),
@@ -62,113 +109,6 @@ namespace YourVillage.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    AddressId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    AddressName = table.Column<string>(nullable: true),
-                    StreetAddress = table.Column<string>(nullable: true),
-                    StreetAddressLine2 = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    Zip = table.Column<int>(nullable: false),
-                    FamilyId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Families_FamilyId",
-                        column: x => x.FamilyId,
-                        principalTable: "Families",
-                        principalColumn: "FamilyId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FamilyId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Families_FamilyId",
-                        column: x => x.FamilyId,
-                        principalTable: "Families",
-                        principalColumn: "FamilyId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Children",
-                columns: table => new
-                {
-                    ChildId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Nickname = table.Column<string>(nullable: true),
-                    Age = table.Column<int>(nullable: false),
-                    AgeUnit = table.Column<string>(nullable: true),
-                    Birthday = table.Column<DateTime>(nullable: false),
-                    FamilyId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Children", x => x.ChildId);
-                    table.ForeignKey(
-                        name: "FK_Children_Families_FamilyId",
-                        column: x => x.FamilyId,
-                        principalTable: "Families",
-                        principalColumn: "FamilyId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Contacts",
-                columns: table => new
-                {
-                    ContactId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    BusinessOrg = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    ContactType = table.Column<string>(nullable: true),
-                    Relationship = table.Column<string>(nullable: true),
-                    FamilyId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contacts", x => x.ContactId);
-                    table.ForeignKey(
-                        name: "FK_Contacts_Families_FamilyId",
-                        column: x => x.FamilyId,
-                        principalTable: "Families",
-                        principalColumn: "FamilyId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,7 +197,7 @@ namespace YourVillage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Note",
+                name: "Notes",
                 columns: table => new
                 {
                     NoteId = table.Column<int>(nullable: false)
@@ -267,9 +207,9 @@ namespace YourVillage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Note", x => x.NoteId);
+                    table.PrimaryKey("PK_Notes", x => x.NoteId);
                     table.ForeignKey(
-                        name: "FK_Note_AspNetUsers_UserId",
+                        name: "FK_Notes_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -277,27 +217,108 @@ namespace YourVillage.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "Addresses",
                 columns: table => new
                 {
-                    ScheduleId = table.Column<int>(nullable: false)
+                    AddressId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Day = table.Column<string>(nullable: true),
-                    ChildId = table.Column<int>(nullable: true)
+                    AddressName = table.Column<string>(nullable: true),
+                    StreetAddress = table.Column<string>(nullable: true),
+                    StreetAddressLine2 = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Zip = table.Column<int>(nullable: false),
+                    FamilyId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.ScheduleId);
+                    table.PrimaryKey("PK_Addresses", x => x.AddressId);
                     table.ForeignKey(
-                        name: "FK_Schedules_Children_ChildId",
-                        column: x => x.ChildId,
-                        principalTable: "Children",
-                        principalColumn: "ChildId",
+                        name: "FK_Addresses_Families_FamilyId",
+                        column: x => x.FamilyId,
+                        principalTable: "Families",
+                        principalColumn: "FamilyId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChildNote",
+                name: "CaregiverFamilies",
+                columns: table => new
+                {
+                    CaregiverFamilyId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CaregiverId = table.Column<string>(nullable: true),
+                    FamilyId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CaregiverFamilies", x => x.CaregiverFamilyId);
+                    table.ForeignKey(
+                        name: "FK_CaregiverFamilies_Caregivers_CaregiverId",
+                        column: x => x.CaregiverId,
+                        principalTable: "Caregivers",
+                        principalColumn: "CaregiverId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CaregiverFamilies_Families_FamilyId",
+                        column: x => x.FamilyId,
+                        principalTable: "Families",
+                        principalColumn: "FamilyId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Children",
+                columns: table => new
+                {
+                    ChildId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    Age = table.Column<int>(nullable: false),
+                    AgeUnit = table.Column<string>(nullable: true),
+                    Birthday = table.Column<DateTime>(nullable: false),
+                    FamilyId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Children", x => x.ChildId);
+                    table.ForeignKey(
+                        name: "FK_Children_Families_FamilyId",
+                        column: x => x.FamilyId,
+                        principalTable: "Families",
+                        principalColumn: "FamilyId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    ContactId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    BusinessOrg = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    ContactType = table.Column<string>(nullable: true),
+                    Relationship = table.Column<string>(nullable: true),
+                    FamilyId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.ContactId);
+                    table.ForeignKey(
+                        name: "FK_Contacts_Families_FamilyId",
+                        column: x => x.FamilyId,
+                        principalTable: "Families",
+                        principalColumn: "FamilyId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChildNotes",
                 columns: table => new
                 {
                     ChildNoteId = table.Column<int>(nullable: false)
@@ -307,18 +328,52 @@ namespace YourVillage.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChildNote", x => x.ChildNoteId);
+                    table.PrimaryKey("PK_ChildNotes", x => x.ChildNoteId);
                     table.ForeignKey(
-                        name: "FK_ChildNote_Children_ChildId",
+                        name: "FK_ChildNotes_Children_ChildId",
                         column: x => x.ChildId,
                         principalTable: "Children",
                         principalColumn: "ChildId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChildNote_Note_NoteId",
+                        name: "FK_ChildNotes_Notes_NoteId",
                         column: x => x.NoteId,
-                        principalTable: "Note",
+                        principalTable: "Notes",
                         principalColumn: "NoteId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChildProfiles",
+                columns: table => new
+                {
+                    ChildProfileId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ChildId = table.Column<int>(nullable: false),
+                    MedicalConditions = table.Column<string>(nullable: true),
+                    Medications = table.Column<string>(nullable: true),
+                    Allergies = table.Column<string>(nullable: true),
+                    Dietary = table.Column<string>(nullable: true),
+                    Snacks = table.Column<string>(nullable: true),
+                    Meals = table.Column<string>(nullable: true),
+                    Bedtime = table.Column<string>(nullable: true),
+                    Naptime = table.Column<string>(nullable: true),
+                    Behavior = table.Column<string>(nullable: true),
+                    Rewards = table.Column<string>(nullable: true),
+                    Consequences = table.Column<string>(nullable: true),
+                    PackForSchool = table.Column<string>(nullable: true),
+                    SchoolMeals = table.Column<string>(nullable: true),
+                    SchoolDetails = table.Column<string>(nullable: true),
+                    Homework = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChildProfiles", x => x.ChildProfileId);
+                    table.ForeignKey(
+                        name: "FK_ChildProfiles_Children_ChildId",
+                        column: x => x.ChildId,
+                        principalTable: "Children",
+                        principalColumn: "ChildId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -354,12 +409,6 @@ namespace YourVillage.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_FamilyId",
-                table: "AspNetUsers",
-                column: "FamilyId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -371,14 +420,29 @@ namespace YourVillage.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChildNote_ChildId",
-                table: "ChildNote",
+                name: "IX_CaregiverFamilies_CaregiverId",
+                table: "CaregiverFamilies",
+                column: "CaregiverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CaregiverFamilies_FamilyId",
+                table: "CaregiverFamilies",
+                column: "FamilyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChildNotes_ChildId",
+                table: "ChildNotes",
                 column: "ChildId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChildNote_NoteId",
-                table: "ChildNote",
+                name: "IX_ChildNotes_NoteId",
+                table: "ChildNotes",
                 column: "NoteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChildProfiles_ChildId",
+                table: "ChildProfiles",
+                column: "ChildId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Children_FamilyId",
@@ -391,14 +455,9 @@ namespace YourVillage.Migrations
                 column: "FamilyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Note_UserId",
-                table: "Note",
+                name: "IX_Notes_UserId",
+                table: "Notes",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_ChildId",
-                table: "Schedules",
-                column: "ChildId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -422,19 +481,25 @@ namespace YourVillage.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ChildNote");
+                name: "CaregiverFamilies");
+
+            migrationBuilder.DropTable(
+                name: "ChildNotes");
+
+            migrationBuilder.DropTable(
+                name: "ChildProfiles");
 
             migrationBuilder.DropTable(
                 name: "Contacts");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Note");
+                name: "Caregivers");
+
+            migrationBuilder.DropTable(
+                name: "Notes");
 
             migrationBuilder.DropTable(
                 name: "Children");
