@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(ViewBag => ViewBag.Family.FamilyId)
+    @Html.HiddenFor(ViewBag => ViewBag.FamilyId)
     <p>First Name: </p>
     @Html.TextBoxFor(model => model.FirstName)
     <p>Last Name: </p> 

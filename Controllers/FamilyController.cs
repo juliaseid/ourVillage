@@ -32,21 +32,27 @@ namespace YourVillage.Controllers
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       var userFamilies = (_db.Families.Where(entry => (entry.ParentId == currentUser.Id))).ToList();
-
-      if (_db.Caregivers.Select(entry => (entry.CaregiverId == currentUser.Id)) != null)
+      if (_db.Caregivers.Where(entry => (entry.CaregiverId == currentUser.Id)) == null) 
       {
-
-        var famout = new List<Family>();
-        var careFamilies = _db.CaregiverFamilies
-        .Where(c => c.CaregiverId == currentUser.Id);
+        Console.WriteLine("You are not a caregiver.");
+      }
+      else if (_db.Caregivers.Where(entry => (entry.CaregiverId == currentUser.Id)) != null)
+      {
+        Console.WriteLine("You ARE a caregiver!");
+        var userCareFamilies = new List<Family>();
+        // var userCareFamilies = new List<string>();
+        var careFamilies = new List<CaregiverFamily>();
+        careFamilies = _db.CaregiverFamilies.Where(c => c.CaregiverId == currentUser.Id).ToList();
         if (careFamilies.Count() != 0)
         {
+          // userCareFamilies.Add("You are a Caregiver!");
           foreach (CaregiverFamily cf in careFamilies)
           {
-            famout.Add(_db.Families.FirstOrDefault(f => f.FamilyId == cf.FamilyId));
+            var thisFamily = await _db.Families.FirstOrDefaultAsync(f => f.FamilyId == cf.FamilyId);
+            userCareFamilies.Add(thisFamily);
           }
         }
-        ViewBag.CareFamilies = famout;
+        ViewBag.CareFamilies = userCareFamilies;
       }
 
       ViewBag.Children = new List<Child>();

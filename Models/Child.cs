@@ -21,6 +21,6 @@ namespace YourVillage.Models
     // public ICollection<Schedule> DailySchedules { get; set; }
     public ICollection<ChildNote> Notes { get; set; }
     public int FamilyId { get; set; }
-    public Family Family { get; set; }
+    // public Family Family { get; set; }
   }
 }

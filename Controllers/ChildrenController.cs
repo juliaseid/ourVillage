@@ -30,7 +30,7 @@ namespace YourVillage.Controllers
       var currentUser = await _userManager.FindByIdAsync(userId);
       var thisFamily = _db.Families.FirstOrDefault(entry => entry.FamilyId == id);
       Console.WriteLine("thisFamily" + thisFamily.ProfileName);
-      ViewBag.Family = thisFamily;
+      ViewBag.FamilyId = thisFamily.FamilyId;
       // var model = new List<Child>();
       List<Child> children = new List<Child>();
       Console.WriteLine(children.Count);
