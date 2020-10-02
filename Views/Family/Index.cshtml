@@ -5,14 +5,17 @@
 @using YourVillage.Models;
 @model IEnumerable<YourVillage.Models.Family>;
 
-<h3>YourVillage Family Profile</h3>
+<h2>YourVillage</h2>
+
+<h3>Your Family</h3>
 @foreach (Family family in Model)
 {
-  <h5>@Html.ActionLink($"See Details for the {family.ProfileName} Family", "Details", new {id = family.FamilyId})</h5>
-}
+  <h5>@Html.ActionLink($"{family.ProfileName} Family Profile", "Profile", new {id = family.FamilyId})</h5>
+
 <br/>
 
-<h4>Your Children</h4>
+<h4>@Html.ActionLink($"Your Children", "Index", "Child", new {id = family.FamilyId})</h4>
+}
   <ul>
     @foreach (Family family in Model)
     {
@@ -67,7 +70,8 @@
   {
     @foreach (Family fam in ViewBag.CareFamilies)
     {
-      <h5>@Html.ActionLink($"{fam.ProfileName}", "Index", "Child", new {id = fam.FamilyId})</h5>
+      <h5>@Html.ActionLink($"{fam.ProfileName}", "Details", "Family", new {id = fam.FamilyId})</h5>
+
     }
   }
   else

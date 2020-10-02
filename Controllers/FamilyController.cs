@@ -27,6 +27,7 @@ namespace YourVillage.Controllers
 
     }
 
+//functions as user dashboard
     public async Task<ActionResult> Index()
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -90,6 +91,23 @@ namespace YourVillage.Controllers
       return RedirectToAction("Index");
     }
 
+//private family profile
+    public async Task<ActionResult> Profile(int id)
+    {
+      Family thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
+      var isAuthorized = await _authService.AuthorizeAsync(User, thisFamily, YourVillageOperations.Read);
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
+      var babysitters = _db.Families
+      .Include(fam => fam.Caregivers)
+      .ThenInclude(join => join.Caregiver)
+      .FirstOrDefault(fam => fam.FamilyId == id);
+      return View(thisFamily);
+    }
+
+    //family details viewable to caregivers
     public async Task<ActionResult> Details(int id)
     {
       Family thisFamily = _db.Families.FirstOrDefault(family => family.FamilyId == id);
@@ -146,6 +164,8 @@ namespace YourVillage.Controllers
       if (thisFamily.SecretCode == code)
       {
         _db.CaregiverFamilies.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
+        thisFamily.GetCaregiverIds();
+        _db.Families.Update(thisFamily);
         // thisFamily.Caregivers.Add(new CaregiverFamily() { CaregiverId = currentUser.Id, FamilyId = thisFamily.FamilyId });
         // thisFamily.CaregiverIds.Concat(currentUser.Id);
         // _db.Families.Update(thisFamily);

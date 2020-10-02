@@ -10,7 +10,7 @@ namespace YourVillage.Models
     {
       this.Caregivers = new HashSet<CaregiverFamily>();
       this.SecretCode = GetSecretCode();
-      this.CaregiverIds = String.Join(",", GetCaregiverIds());
+      this.CaregiverIds = GetCaregiverIds();
     }
     public int FamilyId { get; set; }
     public string ParentId { get; set; }
@@ -36,12 +36,12 @@ namespace YourVillage.Models
     public virtual ICollection<Address> Addresses { get; set; }
     public virtual ICollection<Child> Children { get; set; }
     // public virtual ICollection<ApplicationUser> Caregivers { get; set; }
-    public List<string> GetCaregiverIds()
+    public string GetCaregiverIds()
     {
-      List<string> CaregiverIds = new List<string> { };
+      string CaregiverIds = "";
       foreach (CaregiverFamily c in Caregivers)
       {
-        CaregiverIds.Add(c.CaregiverId);
+        CaregiverIds += c.CaregiverId + ", ";
       }
       return CaregiverIds;
     }
